@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import org.junit.jupiter.api.Test;
-
 import javafx.beans.DefaultProperty;
 
 /**
