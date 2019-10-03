@@ -22,24 +22,25 @@ import seedu.address.model.person.Person;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPersons {
+    private static final String DEFAULT_REMARK = "remarkable!";
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253")
+            .withPhone("94351253").withRemark("She got swagger").withRemark(DEFAULT_REMARK)
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
+            .withAddress("311, Clementi Ave 2, #02-25") .withEmail("johnd@example.com")
+            .withPhone("98765432").withRemark("He has swagger").withRemark(DEFAULT_REMARK)
             .withTags("owesMoney", "friends").build();
-    public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
+    public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563").withRemark(DEFAULT_REMARK)
             .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
+    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533").withRemark(DEFAULT_REMARK)
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
-    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224").withRemark(DEFAULT_REMARK)
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427").withRemark(DEFAULT_REMARK)
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442").withRemark(DEFAULT_REMARK)
             .withEmail("anna@example.com").withAddress("4th street").build();
 
     // Manually added
