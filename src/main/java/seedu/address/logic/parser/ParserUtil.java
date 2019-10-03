@@ -90,9 +90,6 @@ public class ParserUtil {
     public static Remark parseRemark(String remarks) throws ParseException {
         requireNonNull(remarks);
         String trimmedRemark = remarks.trim();
-        if (!Remark.isValidRemark(trimmedRemark)) {
-            throw new ParseException(Remark.MESSAGE_CONSTRAINTS);
-        }
         return new Remark(trimmedRemark);
     }
 

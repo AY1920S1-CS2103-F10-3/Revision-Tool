@@ -22,7 +22,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 class RemarkCommandTest {
 
-    private static final String REMARK_STUB = "remarkable";
+    private static final String REMARK_STUB = "remarkable!";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -83,15 +83,20 @@ class RemarkCommandTest {
         assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    /**
+     * Edit filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        //ensures that outOfBound index is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-        RemarkCommand remarkCommand = new RemarkCommand(outOfBoundIndex, new Remark(VALID_REMARK_BOB));
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
+        RemarkCommand remarkCommand = new RemarkCommand(outOfBoundIndex, new Remark(VALID_REMARK_BOB));
+
+        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
 }
