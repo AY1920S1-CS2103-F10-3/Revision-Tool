@@ -14,13 +14,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.answerable.Answer;
-import seedu.address.model.answerable.Answerable;
-import seedu.address.model.answerable.Category;
-import seedu.address.model.answerable.Difficulty;
-import seedu.address.model.answerable.Mcq;
-import seedu.address.model.answerable.AnswerSet;
-import seedu.address.model.answerable.Question;
+import seedu.address.model.answerable.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,12 +30,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_QUESTION_TYPE, PREFIX_QUESTION, PREFIX_CORRECT, PREFIX_WRONG,
-                PREFIX_DIFFICULTY, PREFIX_CATEGORY, PREFIX_TAG);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_QUESTION, PREFIX_CORRECT, PREFIX_WRONG, PREFIX_CATEGORY,
-                PREFIX_DIFFICULTY) || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        }
+                        PREFIX_DIFFICULTY, PREFIX_CATEGORY, PREFIX_TAG);
 
         QuestionType questionType = ParserUtil.parseType(argMultimap.getValue(PREFIX_QUESTION_TYPE).get());
         Question question = ParserUtil.parseQuestion(argMultimap.getValue(PREFIX_QUESTION).get());
@@ -51,6 +40,20 @@ public class AddCommandParser implements Parser<AddCommand> {
         Category category = ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
+        if (questionType.getType().equals("mcq")) {
+            if (!arePrefixesPresent(argMultimap, PREFIX_QUESTION, PREFIX_CORRECT, PREFIX_WRONG, PREFIX_CATEGORY,
+                    PREFIX_DIFFICULTY) || !argMultimap.getPreamble().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+        } else if (questionType.getType().equals("saq")) {
+            if (!arePrefixesPresent(argMultimap, PREFIX_QUESTION, PREFIX_CORRECT, PREFIX_CATEGORY,
+                    PREFIX_DIFFICULTY) || !argMultimap.getPreamble().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
         Answerable answerable;
 
         switch (questionType.getType()) {
@@ -58,11 +61,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             AnswerSet mcqAnswers = new AnswerSet(correctAnswerSet, wrongAnswerSetSet);
             answerable = new Mcq(question, mcqAnswers, difficulty, category, tagList);
             return new AddCommand(answerable);
-//        case "saq":
-//            //TODO: Implement Saq
-//            AnswerSet saqAnswers = new AnswerSet(); //stub
-//            answerable = new Saq(question, saqAnswers, difficulty, category, tagList);
-//            return new AddCommand(answerable);
+        case "saq":
+            //TODO: Implement Saq
+            AnswerSet saqAnswers = new AnswerSet(correctAnswerSet); //stub
+            answerable = new Saq(question, saqAnswers, difficulty, category, tagList);
+            return new AddCommand(answerable);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
