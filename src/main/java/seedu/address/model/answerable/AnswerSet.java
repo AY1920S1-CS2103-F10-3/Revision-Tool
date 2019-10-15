@@ -26,17 +26,9 @@ public class AnswerSet {
         this.wrongAnswerSet = wrongAnswerSet;
     }
 
-    public AnswerSet(Set<Answer> correctAnswerSet) {
-        this.correctAnswerSet = correctAnswerSet;
-        this.wrongAnswerSet = new HashSet<>();
-    }
-
     public boolean isCorrect(String answer) {
         //TODO: Implement isCorrect method
-        if (correctAnswerSet.contains(answer)) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     public Set<Answer> getCorrectAnswerSet() {
@@ -57,12 +49,8 @@ public class AnswerSet {
 
     @Override
     public String toString() {
-        if (wrongAnswerSet.isEmpty()) {
-            return "Correct Answers: " + Arrays.toString(correctAnswerSet.toArray());
-        } else {
-            return "Correct Answers: " + Arrays.toString(correctAnswerSet.toArray())
-                    + "Wrong Answers: " + Arrays.toString(wrongAnswerSet.toArray());
-        }
+        return "Correct Answers: " + Arrays.toString(correctAnswerSet.toArray())
+                + "Wrong Answers: " + Arrays.toString(wrongAnswerSet.toArray());
     }
 
     /**
