@@ -15,18 +15,17 @@
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
 <li><a href="#starting-the-quiz-code-start-code">3.2. Starting the quiz: <code>start</code>.</a></li>
-<li><a href="#ending-the-quiz-code-end-code">3.3. Ending the quiz: <code>end</code></a></li>
+<li><a href="#exiting-the-quiz-application-code-exit-code">3.3. Exiting the quiz / application: <code>exit</code></a></li>
 <li><a href="#check-your-progress-code-status-code">3.4. Check your progress: <code>status</code></a></li>
 <li><a href="#adding-a-question-code-add-code">3.5. Adding a question: <code>add</code></a></li>
-<li><a href="#code-strong-need-improvement-strong-code-editing-a-question-code-edit-code">3.6. <code><strong>Need improvement</strong></code> Editing a question : <code>edit</code></a></li>
+<li><a href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></li>
 <li><a href="#deleting-a-question-code-delete-code">3.7. Deleting a question : <code>delete</code></a></li>
 <li><a href="#listing-all-questions-code-list-code">3.8. Listing all questions : <code>list</code></a></li>
 <li><a href="#locating-questions-code-find-code">3.9. Locating questions: <code>find</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></li>
 <li><a href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.12. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">3.13. Saving the data</a></li>
-<li><a href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting test banks <code>[coming in v2.0]</code></a></li>
+<li><a href="#saving-the-data">3.12. Saving the data</a></li>
+<li><a href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.13. Importing / Exporting test banks <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -114,14 +113,10 @@ of the above x/Padifield</code> : adds an mcq question with x/ (as in a cross fo
 which can be used as <code>add mcq/What the recommended user story format?</code>.</p>
 </li>
 <li>
-<p>Items in square brackets are optional e.g <code>mcq/QUESTION [cat/CATEGORY]</code> can be used as
-<code>mcq/What is the recommended user story format cat?/Requirements</code> or as <code>mcq/What is the recommended user story format?</code>.</p>
+<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[x/WRONG_ANSWER]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>x/Greenfield</code>, <code>x/Brownfield</code> etc.</p>
 </li>
 <li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[y/CORRECT_ANSWER]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>y/Greenfield</code>, <code>y/Brownfield</code> etc.</p>
-</li>
-<li>
-<p>Parameters can be in any order e.g. if the command specifies <code>mcq/QUESTION cat/CATEGORY</code>, <code>cat/CATEGORY mcq/QUESTION</code> is also acceptable.</p>
+<p>Parameters can be in any order e.g. if the command specifies <code>q/QUESTION cat/CATEGORY</code>, <code>cat/CATEGORY q/QUESTION</code> is also acceptable.</p>
 </li>
 </ul>
 </div>
@@ -136,10 +131,10 @@ which can be used as <code>add mcq/What the recommended user story format?</code
 <div class="sect2">
 <h3 id="starting-the-quiz-code-start-code"><a class="link" href="#starting-the-quiz-code-start-code">3.2. Starting the quiz: <code>start</code>.</a></h3>
 <div class="paragraph">
-<p>User can start by choosing a <code>category</code>, <code>difficulty</code> or <code>recommended</code> bank of questions.</p>
+<p>User can start by choosing the mode of the quiz. (normal / chaos / custom)</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>start cat/[CATEGORY] diff/[difficulty]</code></p>
+<p>Format: <code>start mode/MODE</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -148,8 +143,8 @@ which can be used as <code>add mcq/What the recommended user story format?</code
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If no category or difficulty is stated (i.e. <code>start</code>), program will start the quiz with a recommended list of questions based on categories
-that the user can improve on.
+If no category or difficulty is stated (i.e. <code>start</code>), program will start the quiz based on all the questions in the
+question bank.
 </td>
 </tr>
 </table>
@@ -160,21 +155,25 @@ that the user can improve on.
 <div class="ulist">
 <ul>
 <li>
-<p><code>start cat/implementation</code></p>
+<p><code>start mode/normal</code></p>
 </li>
 <li>
-<p><code>start diff/2</code></p>
+<p><code>start mode/custom</code></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ending-the-quiz-code-end-code"><a class="link" href="#ending-the-quiz-code-end-code">3.3. Ending the quiz: <code>end</code></a></h3>
+<h3 id="exiting-the-quiz-application-code-exit-code"><a class="link" href="#exiting-the-quiz-application-code-exit-code">3.3. Exiting the quiz / application: <code>exit</code></a></h3>
 <div class="paragraph">
-<p>User can end the quiz and go back into configuration mode to perform commands such as <code>add</code>, <code>list</code>, and <code>status</code></p>
+<p>User can end the quiz and go back into configuration mode to perform commands such as <code>add</code>, <code>list</code>, and <code>status</code>
+.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>end</code></p>
+<p>If user is in configuration mode, <code>exit</code> will close the application.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
@@ -240,7 +239,12 @@ that the user can improve on.
 <p>Adds a question to the test bank</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>add [mcq/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code></p>
+<p>Format: `add type/TYPE q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER x/WRONG_ANSWER&#8230;&#8203; `</p>
+</div>
+<div class="paragraph">
+<p><strong>MCQ</strong>: 1 Correct answer and 3 Wrong answers.<br>
+<strong>True &amp; False</strong>: 1 Correct answer (i.e. True / False) wrong answers omitted.<br>
+<strong>SAQ</strong>: Multiple correct answers, wrong answers omitted.</p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -248,29 +252,30 @@ that the user can improve on.
 <div class="ulist">
 <ul>
 <li>
-<p><code>mcq/ According to the textbook, which kind of project is more difficult? x/Greenfield x/Brownfield y/None
-of the above x/Padifield</code></p>
+<p><code>add type/mcq q/According to the textbook, which kind of project is more difficult? cat/Week 2 diff/1
+x/Greenfield x/Brownfield y/None of the others of the above x/Padifield</code></p>
 </li>
 <li>
-<p><code>mcq/ What are some characteristics of well-defined requirements? y/Unambiguous x/Untestable y/Clear y/Atomic</code></p>
+<p>`add type/tf q/OODMs are Class Diagrams cat/uml diff/2 y/true `</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="code-strong-need-improvement-strong-code-editing-a-question-code-edit-code"><a class="link" href="#code-strong-need-improvement-strong-code-editing-a-question-code-edit-code">3.6. <code><strong>Need improvement</strong></code> Editing a question : <code>edit</code></a></h3>
+<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing question in the test bank.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>edit INDEX [mcq/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code></p>
+<p>Format: <code>edit INDEX [q/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Edits the question at the specified <code>INDEX</code>. The index refers to the index number shown in the displayed question list. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+<p>Edits the question at the specified <code>INDEX</code>. The index refers to the index number shown in the displayed question list.
+The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
 <p>At least one of the optional fields must be provided.</p>
@@ -282,9 +287,6 @@ of the above x/Padifield</code></p>
 <p>When editing category and/or difficulty, the existing category and/or difficulty of the question will be removed
 i.e adding of category and/or difficulty is not cumulative.</p>
 </li>
-<li>
-<p>You can remove all the question&#8217;s category and/or difficulty by typing <code>cat/</code> or <code>diff/</code> without specifying any tags after it.</p>
-</li>
 </ul>
 </div>
 </div>
@@ -295,8 +297,8 @@ i.e adding of category and/or difficulty is not cumulative.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 mcq/According the the textbook, is greenfield or brownfield tougher?</code><br>
-Edits the the question of the first mcq to "According the the textbook, is greenfield or brownfield tougher?"</p>
+<p><code>edit 1 q/According the the textbook, is greenfield or brownfield tougher?</code><br>
+Edits the the first question to "According the the textbook, is greenfield or brownfield tougher?"</p>
 </li>
 </ul>
 </div>
@@ -349,7 +351,19 @@ Deletes the 1st, 3rd and 5th question in the test bank list.</p>
 of the chosen category and/or difficulty</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>list cat/[CATEGORY] diff/[DIFFICULTY]</code></p>
+<p>Format: <code>list [cat/CATEGORY] [diff/DIFFICULTY]</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If no category or difficulty is stated (i.e. <code>list</code>), program will list the entire question bank.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -427,21 +441,14 @@ Format: <code>restore</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.12. Exiting the program : <code>exit</code></a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.12. Saving the data</a></h3>
 <div class="paragraph">
-<p>Exits the program.<br>
-Format: <code>exit</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.13. Saving the data</a></h3>
-<div class="paragraph">
-<p>Test bank data are saved in the hard disk automatically after any command that changes the data.<br>
+<p>Test bank data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-exporting-test-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting test banks <code>[coming in v2.0]</code></a></h3>
+<h3 id="importing-exporting-test-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.13. Importing / Exporting test banks <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can import / export test banks}</em></p>
 </div>
@@ -466,32 +473,31 @@ There is no need to save manually.</p>
 <p><strong>Help</strong> : <code>help</code></p>
 </li>
 <li>
-<p><strong>Start</strong> `start [cat/CATEGORY] [diff/DIFFICULTY]</p>
+<p><strong>Start</strong> <code>start mode/MODE</code><br>
+e.g. <code>start mode/normal</code></p>
 </li>
 <li>
-<p><strong>End</strong> <code>end</code></p>
+<p><strong>Exit</strong> <code>exit</code></p>
 </li>
 <li>
 <p><strong>Status</strong> : <code>status</code></p>
 </li>
 <li>
-<p><strong>Add</strong> <code>add [mcq/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code><br>
-e.g. <code>mcq/ What are some characteristics of well-defined requirements? y/Unambiguous x/Untestable y/Clear y/Atomic</code></p>
-</li>
-</ul>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Edit (To be updated)</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
+<p><strong>Add</strong> <code>add type/TYPE q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER x/WRONG_ANSWER&#8230;&#8203;</code><br>
+e.g. <code>add type/mcq q/According to the textbook, which kind of project is more difficult? cat/Week 2 diff/1
+x/Greenfield x/Brownfield y/None of the others of the above x/Padifield</code></p>
 </li>
 <li>
-<p><strong>Delete</strong> : <code>delete INDEX [MORE_INDICS]</code><br>
+<p><strong>Edit</strong> : <code>edit INDEX [q/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code><br>
+e.g. <code>edit 1 q/According the the textbook, is greenfield or brownfield tougher?</code></p>
+</li>
+<li>
+<p><strong>Delete</strong> : <code>delete INDEX [MORE_INDICES]</code><br>
 e.g. <code>delete 1 3 5</code></p>
 </li>
 <li>
-<p><strong>List</strong> : <code>list</code></p>
+<p><strong>List</strong> : <code>list [cat/CATEGORY] [diff/DIFFICULTY]</code>
+e.g. <code>list cat/requiments diff/2</code></p>
 </li>
 <li>
 <p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
@@ -506,4 +512,4 @@ e.g. <code>find user story</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-28 12:32:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-30 17:48:47 UTC</div></div></div></body></html>
