@@ -1,9 +1,9 @@
 package seedu.revision.model.quiz;
 
-import java.util.function.Predicate;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.revision.commons.util.AppUtil.checkArgument;
+
+import java.util.function.Predicate;
 
 import seedu.revision.model.answerable.Answerable;
 
@@ -11,7 +11,7 @@ import seedu.revision.model.answerable.Answerable;
  * Represents the mode of a quiz in the Revision Tool.
  * Guarantees: immutable; is valid as declared in {@link #isValidMode(String)}
  */
-public abstract class Mode {
+public class Mode {
 
     public static final String MESSAGE_CONSTRAINTS = "Mode can only be normal / arcade / custom";
 
@@ -36,16 +36,15 @@ public abstract class Mode {
         this.value = value;
     }
 
-
     /**
-     * Returns true if a given string is a valid mode.
+     * Returns true if a given string is a valid question.
      */
     public static boolean isValidMode(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
     public int getTime() {
-        return this.time;
+        return time;
     }
 
     public int getLevelTwoTime() {
@@ -59,14 +58,6 @@ public abstract class Mode {
     public Predicate<Answerable> getCombinedPredicate() {
         return combinedPredicate;
     }
-
-    public abstract Mode withCombinedPredicate(Predicate<Answerable> combinedPredicate);
-
-    public abstract Mode withTime(int time);
-
-    public abstract Mode build();
-
-
     @Override
     public String toString() {
         return value;

@@ -21,8 +21,6 @@ import seedu.revision.logic.parser.exceptions.ParseException;
  * Timer class which handles the animations and implementation of the quiz session timer.
  */
 public class Timer {
-    public static final String MESSAGE_CONSTRAINTS = "Timer must be a number that is greater 1, and " +
-            "double values will be truncated.";
     private static final Logger logger = LogsCenter.getLogger(Timer.class);
 
     private final Integer startTime;
@@ -53,7 +51,7 @@ public class Timer {
     }
 
     /**
-     * Starts the timer and initiates the {@CommandExecutor}.
+     * Starts the timer and initiates the {@CommandExecutpr}.
      */
     public void startTimer() {
         timeline = new Timeline();
