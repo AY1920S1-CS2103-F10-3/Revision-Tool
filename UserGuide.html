@@ -16,20 +16,30 @@
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
 <li><a href="#starting-the-quiz-code-start-code">3.2. Starting the quiz: <code>start</code>.</a></li>
 <li><a href="#exiting-the-quiz-application-code-exit-code">3.3. Exiting the quiz / application: <code>exit</code></a></li>
-<li><a href="#check-your-progress-code-status-code">3.4. Check your progress: <code>status</code></a></li>
-<li><a href="#adding-a-question-code-add-code">3.5. Adding a question: <code>add</code></a></li>
-<li><a href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></li>
-<li><a href="#deleting-a-question-code-delete-code">3.7. Deleting a question : <code>delete</code></a></li>
-<li><a href="#listing-all-questions-code-list-code">3.8. Listing all questions : <code>list</code></a></li>
-<li><a href="#locating-questions-code-find-code">3.9. Locating questions: <code>find</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></li>
-<li><a href="#saving-the-data">3.12. Saving the data</a></li>
-<li><a href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.13. Importing / Exporting test banks <code>[coming in v2.0]</code></a></li>
+<li><a href="#check-your-progress-code-status-code-coming-in-v1-4">3.4. Check your progress: <code>status</code> [Coming in v1.4]</a></li>
+<li><a href="#autocomplete-function">3.5. AutoComplete Function</a></li>
+<li><a href="#adding-a-question-code-add-code">3.6. Adding a question: <code>add</code></a></li>
+<li><a href="#editing-a-question-code-edit-code">3.7. Editing a question : <code>edit</code></a></li>
+<li><a href="#deleting-a-question-code-delete-code">3.8. Deleting a question : <code>delete</code></a></li>
+<li><a href="#listing-all-questions-code-list-code">3.9. Listing all questions : <code>list</code></a></li>
+<li><a href="#locating-questions-code-find-code">3.10. Locating questions: <code>find</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#restoring-all-entries-code-restore-code">3.12. Restoring all entries : <code>restore</code></a></li>
+<li><a href="#saving-the-data">3.13. Saving the data</a></li>
+<li><a href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting test banks <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
-<li><a href="#faq">4. FAQ</a></li>
-<li><a href="#command-summary">5. Command Summary</a></li>
+<li><a href="#quiz-mode">4. Quiz Mode</a>
+<ul class="sectlevel2">
+<li><a href="#normal-mode">4.1. Normal Mode</a></li>
+<li><a href="#arcade-mode">4.2. Arcade Mode</a></li>
+<li><a href="#custom-mode">4.3. Custom Mode</a></li>
+<li><a href="#answering-questions">4.4. Answering Questions</a></li>
+<li><a href="#saq">4.5. SAQ</a></li>
+</ul>
+</li>
+<li><a href="#faq">5. FAQ</a></li>
+<li><a href="#command-summary">6. Command Summary</a></li>
 </ul>
 </div>
 </div>
@@ -79,8 +89,9 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong><code>list</code></strong> : lists all categories and difficulties for the user to choose.</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>type/mcq q/According to the textbook, which kind of project is more difficult? x/Greenfield x/Brownfield y/None
-of the above x/Padifield</code> : adds an mcq question with x/ (as in a cross for "wrong") marking the wrong answers and y/ (as in "yes") marking the correct answers.</p>
+<p><strong><code>add `</strong>`type/mcq q/According to the textbook, which kind of project is more difficult? x/Greenfield x/Brownfield y/None
+of the above x/Padifield diff/1 cat/Introduction</code> : adds an mcq question with x/ (as in a cross for "wrong") marking the wrong answers and
+y/ (as in "yes") marking the correct answers. Difficulty: 1, Category: Introduction.</p>
 </li>
 <li>
 <p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd question shown in the current list.</p>
@@ -131,7 +142,7 @@ which can be used as <code>add type/mcq q/What the recommended user story format
 <div class="sect2">
 <h3 id="starting-the-quiz-code-start-code"><a class="link" href="#starting-the-quiz-code-start-code">3.2. Starting the quiz: <code>start</code>.</a></h3>
 <div class="paragraph">
-<p>User can start by choosing the mode of the quiz. (normal / arcade / custom)</p>
+<p>User can start by choosing the mode of the quiz. (normal / arcade / custom). See Section 4 (Quiz Mode) for in-quiz commands.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>start mode/MODE</code></p>
@@ -143,8 +154,8 @@ which can be used as <code>add type/mcq q/What the recommended user story format
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If no category or difficulty is stated (i.e. <code>start</code>), program will start the quiz based on all the questions in the
-question bank.
+To start all questions in the test bank, use command<br>
+start mode/normal
 </td>
 </tr>
 </table>
@@ -158,7 +169,7 @@ question bank.
 <p><code>start mode/normal</code></p>
 </li>
 <li>
-<p><code>start mode/custom</code></p>
+<p><code>start mode/custom cat/uml /diff/1 timer/20</code></p>
 </li>
 </ul>
 </div>
@@ -177,7 +188,7 @@ question bank.
 </div>
 </div>
 <div class="sect2">
-<h3 id="check-your-progress-code-status-code"><a class="link" href="#check-your-progress-code-status-code">3.4. Check your progress: <code>status</code></a></h3>
+<h3 id="check-your-progress-code-status-code-coming-in-v1-4"><a class="link" href="#check-your-progress-code-status-code-coming-in-v1-4">3.4. Check your progress: <code>status</code> [Coming in v1.4]</a></h3>
 <div class="paragraph">
 <p>Displays the number of questions answered correctly by category and difficulty.</p>
 </div>
@@ -234,7 +245,35 @@ question bank.
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-question-code-add-code"><a class="link" href="#adding-a-question-code-add-code">3.5. Adding a question: <code>add</code></a></h3>
+<h3 id="autocomplete-function"><a class="link" href="#autocomplete-function">3.5. AutoComplete Function</a></h3>
+<div class="paragraph">
+<p>Helps you complete your command when you type.</p>
+</div>
+<div class="paragraph">
+<p>Upon pressing the "TAB" key on your keyboard, the app will be able to
+give you a list of dropdown options that will aid you in your command typing.</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>User types "add" in the command box and presses the "TAB" key</code></p>
+</li>
+<li>
+<p><code>He will be able to see a list of dropdown options as shown:</code></p>
+<div class="imageblock">
+<div class="content">
+<img src="images/autocomplete.png" alt="autocomplete" width="790">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-question-code-add-code"><a class="link" href="#adding-a-question-code-add-code">3.6. Adding a question: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Adds a question to the test bank</p>
 </div>
@@ -256,13 +295,16 @@ question bank.
 x/Greenfield x/Brownfield y/None of the others of the above x/Padifield</code></p>
 </li>
 <li>
-<p>`add type/tf q/OODMs are Class Diagrams cat/uml diff/2 y/true `</p>
+<p><code>add type/tf q/OODMs are Clas&gt;1 secs Diagrams cat/uml diff/2 y/true</code></p>
+</li>
+<li>
+<p><code>add type/saq q/What does UML stands for? cat/cs2103 diff/1 y/unified modeling language</code></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></h3>
+<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.7. Editing a question : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing question in the test bank.</p>
 </div>
@@ -304,7 +346,7 @@ Edits the the first question to "According the the textbook, is greenfield or br
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-question-code-delete-code"><a class="link" href="#deleting-a-question-code-delete-code">3.7. Deleting a question : <code>delete</code></a></h3>
+<h3 id="deleting-a-question-code-delete-code"><a class="link" href="#deleting-a-question-code-delete-code">3.8. Deleting a question : <code>delete</code></a></h3>
 <div class="paragraph">
 <p>Deletes the specified questions from the test bank.<br>
 Format: <code>delete INDEX [MORE_INDICES]</code></p>
@@ -345,7 +387,7 @@ Deletes the 1st, 3rd and 5th question in the test bank list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-questions-code-list-code"><a class="link" href="#listing-all-questions-code-list-code">3.8. Listing all questions : <code>list</code></a></h3>
+<h3 id="listing-all-questions-code-list-code"><a class="link" href="#listing-all-questions-code-list-code">3.9. Listing all questions : <code>list</code></a></h3>
 <div class="paragraph">
 <p>Shows a list of all questions in the test back. If appended with a category and/or difficulty, <code><strong>Insert name</strong></code> will show all questions
 of the chosen category and/or difficulty</p>
@@ -380,7 +422,7 @@ If no category or difficulty is stated (i.e. <code>list</code>), program will li
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-questions-code-find-code"><a class="link" href="#locating-questions-code-find-code">3.9. Locating questions: <code>find</code></a></h3>
+<h3 id="locating-questions-code-find-code"><a class="link" href="#locating-questions-code-find-code">3.10. Locating questions: <code>find</code></a></h3>
 <div class="paragraph">
 <p>Finds questions whose descriptions contain any of the given keywords.<br></p>
 </div>
@@ -427,28 +469,28 @@ Returns any question containing descriptions <code>User</code>, <code>Brownfield
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all questions from the test bank.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="restoring-all-entries-code-restore-code"><a class="link" href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></h3>
+<h3 id="restoring-all-entries-code-restore-code"><a class="link" href="#restoring-all-entries-code-restore-code">3.12. Restoring all entries : <code>restore</code></a></h3>
 <div class="paragraph">
 <p>Clears all current questions from the test bank and restores the default questions that were in the original app.<br>
 Format: <code>restore</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.12. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.13. Saving the data</a></h3>
 <div class="paragraph">
 <p>Test bank data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-exporting-test-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.13. Importing / Exporting test banks <code>[coming in v2.0]</code></a></h3>
+<h3 id="importing-exporting-test-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting test banks <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can import / export test banks}</em></p>
 </div>
@@ -456,7 +498,51 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="faq"><a class="link" href="#faq">4. FAQ</a></h2>
+<h2 id="quiz-mode"><a class="link" href="#quiz-mode">4. Quiz Mode</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="normal-mode"><a class="link" href="#normal-mode">4.1. Normal Mode</a></h3>
+<div class="paragraph">
+<p>Levels are separated by difficulty. User has the choice to move on to the next level or exit the quiz.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="arcade-mode"><a class="link" href="#arcade-mode">4.2. Arcade Mode</a></h3>
+<div class="paragraph">
+<p>Levels are separated by difficulty. If user enters a wrong answer before finishing the quiz. Quiz will end and display the results.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="custom-mode"><a class="link" href="#custom-mode">4.3. Custom Mode</a></h3>
+<div class="paragraph">
+<p>Category, Difficulty and Timer (must be above 1 second) can be customised by the user.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="answering-questions"><a class="link" href="#answering-questions">4.4. Answering Questions</a></h3>
+<div class="sect3">
+<h4 id="mcq"><a class="link" href="#mcq">4.4.1. MCQ</a></h4>
+<div class="paragraph">
+<p>Answers can only be A, B, C, or D (Case insensitive)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="true-and-false"><a class="link" href="#true-and-false">4.4.2. True and False</a></h4>
+<div class="paragraph">
+<p>Answers can only be True (T) / False (F) (Case insensitive)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saq"><a class="link" href="#saq">4.5. SAQ</a></h3>
+<div class="paragraph">
+<p>Answers are open ended. Revision tool uses NLP to parse answers and determine whether they are correct.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faq"><a class="link" href="#faq">5. FAQ</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Q</strong>: How do I transfer my data to another Computer?<br>
@@ -465,7 +551,7 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
+<h2 id="command-summary"><a class="link" href="#command-summary">6. Command Summary</a></h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -511,5 +597,9 @@ e.g. <code>find user story</code></p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>AutoComplete</strong>: Use the "TAB" key to see dropdown options<br>
+for auto completion.</p>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 15:17:19 UTC</div></div></div></body></html>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-02 19:39:33 UTC</div></div></div></body></html>
