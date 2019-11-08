@@ -1,0 +1,681 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Wilfred Bradley Tan - Project Portfolio for CS2103/T Revision Tool (RT)</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">CS2103/T Revision Tool</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link active" href="../AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="../ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/AY1920S1-CS2103-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Wilfred Bradley Tan - Project Portfolio for CS2103/T Revision Tool (RT)</h1></div><div id="content"><div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>By: <code>Team F10-3</code>      Since: <code>Aug 2019</code>      Licence: <code>MIT</code></p>
+</div>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="#introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#the-team">1.1. The Team</a></li>
+<li><a href="#about-the-project">1.2. About the Project</a></li>
+</ul>
+</li>
+<li><a href="#summary-of-contributions">2. Summary of contributions</a></li>
+<li><a href="#contributions-to-the-user-guide">3. Contributions to the User Guide</a>
+<ul class="sectlevel2">
+<li><a href="#starting-the-quiz-code-start-code">3.1. Starting the quiz: <code>start</code>.</a></li>
+<li><a href="#adding-a-question-code-add-code">3.2. Adding a question: <code>add</code></a></li>
+<li><a href="#editing-a-question-code-edit-code">3.3. Editing a question : <code>edit</code></a></li>
+</ul>
+</li>
+<li><a href="#quiz-mode">4. Quiz Mode</a>
+<ul class="sectlevel2">
+<li><a href="#normal-mode">4.1. Normal Mode</a></li>
+<li><a href="#arcade-mode">4.2. Arcade Mode</a></li>
+<li><a href="#custom-mode">4.3. Custom Mode</a></li>
+<li><a href="#answering-questions">4.4. Answering Questions</a></li>
+</ul>
+</li>
+<li><a href="#command-summary">5. Command Summary</a></li>
+<li><a href="#contributions-to-the-developer-guide">6. Contributions to the Developer Guide</a>
+<ul class="sectlevel3">
+<li><a href="#managing-parsing-in-configuration-and-quiz-mode">6.1. Managing parsing in Configuration and Quiz Mode</a></li>
+<li><a href="#parsing-in-configuration-mode">6.2. Parsing in Configuration Mode</a></li>
+<li><a href="#parsing-in-quiz-mode">6.3. Parsing in Quiz Mode</a></li>
+<li><a href="#quiz-mode-2">6.4. Quiz Mode</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This portfolio provides an overview of the CS2103/T Revision Tool and highlights my contribution in the project including a brief description of the key features that I implemented.</p>
+</div>
+<div class="sect2">
+<h3 id="the-team"><a class="link" href="#the-team">1.1. The Team</a></h3>
+<div class="paragraph">
+<p>Our team of 5 consists of 2 Year 4 Engineering Science students, a Year 4 Industrial &amp; Systems Engineering student, a Year
+3 Communications and New Media student and myself, a Year 2 Computer Science / Business student.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="about-the-project"><a class="link" href="#about-the-project">1.2. About the Project</a></h3>
+<div class="paragraph">
+<p>This 7-week project was started as part of NUS' Software Engineering (CS2103/T) module. The team was required to
+to either morph or enhance an existing application (<a href="https://github.com/nus-cs2103-AY1920S1/addressbook-level3/">Address Book - Level 3</a>). Our team decided to morph the project
+into the CS2103/T Revision Tool (RT) a desktop quiz application which allows users to create customised question banks
+and attempt the quizzes in an interactive manner. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 14 kLoC.</p>
+</div>
+<div class="paragraph">
+<div class="title">UI of the Configuration Mode</div>
+<p><span class="image"><img src="../images/Ui.png" alt="Ui" width="790"></span></p>
+</div>
+<div class="paragraph">
+<div class="title">UI of the Quiz Mode</div>
+<p><span class="image"><img src="../images/Ui2.png" alt="Ui2" width="790"></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">2. Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As the Team Lead of the project, my role was to ensure that the team met the milestones and to coordinate the integration
+of the entire application. Furthermore, I developed the main driver for the Quiz Mode in the application which was the backbone
+of many of the other features.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: added <strong>the main driver for the quiz</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does</strong>: After entering quiz mode, the driver parses user input, determines whether the answer is correct and displays the next question. At the end of each level and the entire quiz, the user is shown his/her score and given the choice to continue (i.e. proceed to the next level or restart) or exit the quiz.</p>
+</li>
+<li>
+<p><strong>Justification</strong>: This essential feature is the core of the application and allows other features to be built upon it. Furthermore, it significantly improves the product as it adds the element of interaction to the application.</p>
+</li>
+<li>
+<p><strong>Highlights</strong>: This enhancement required the deep understanding of the entire project structure as it can be considered the nervous system that connects the application from UI to Storage. Other functionality such as answering MCQs, True &amp; False or Short-Answer Questions (SAQ) were built upon this feature.</p>
+</li>
+<li>
+<p>Credits: Code for the GUI display was adapted from Address Book – Level 3</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancements</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Created the Normal and Arcade mode for the quiz. In Arcade Mode, each level has increasing difficulty and a shorter time limit, whenever a user gets a question wrong, the quiz ends and the user has to restart.</p>
+</li>
+<li>
+<p>Created the abstract <code>Answerable</code> Class for subclasses such as <code>MCQ</code>, <code>TrueFalse</code> and <code>SAQ</code> classes to be built upon.</p>
+</li>
+<li>
+<p>Added a progress bar for each level in the quiz.</p>
+</li>
+<li>
+<p>Implemented the adaptable UI for each type of question’s answers (i.e. allowing the GUI to change from displaying 4 panels for MCQs to 2 panels for True &amp; False questions).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: You can view the code I contributed to this project <a href="{contributedCodeUtl}/">here, window=blank</a></p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Managed releases v1.3 - v1.4 (2 releases) on GitHub</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated the GUI colour scheme and added aesthetic artifacts such as level label (PR <a href="https://github.com/AY1920S1-CS2103-F10-3/main/pull/98">#98</a>, <a href="https://github.com/AY1920S1-CS2103-F10-3/main/pull/148">#148</a>)</p>
+</li>
+<li>
+<p>Created skeleton class for <code>AnswerableBuilder</code> using Java Generics and the builder class design so that other teammates will be able to build upon it easily (PR <a href="https://github.com/AY1920S1-CS2103-F10-3/main/pull/148">#148</a>, <a href="https://github.com/AY1920S1-CS2103-F10-3/main/pull/149">#149</a>)</p>
+</li>
+<li>
+<p>Adapted CommandResult to follow the builder design pattern .</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Did cosmetic tweaks to existing contents of the User Guide link:https://github.com/AY1920S1-CS2103-F10-3/main/pull</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com">#12</a>, <a href="https://github.com">#32</a>, <a href="https://github.com">#19</a>, <a href="https://github.com">#42</a></p>
+</li>
+<li>
+<p>Contributed to forum discussions (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>, <a href="https://github.com">4</a>)</p>
+</li>
+<li>
+<p>Reported bugs and suggestions for other teams in the class (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>)</p>
+</li>
+<li>
+<p>Some parts of the history feature I added was adopted by several other class mates (<a href="https://github.com">1</a>, <a href="https://github.com">2</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">3. Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="starting-the-quiz-code-start-code"><a class="link" href="#starting-the-quiz-code-start-code">3.1. Starting the quiz: <code>start</code>.</a></h3>
+<div class="paragraph">
+<p>User can start by choosing the mode of the quiz. (normal / arcade / custom). See <a href="#quiz-mode">Section 4, &#8220;Quiz Mode&#8221;</a> for in-quiz commands.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>start mode/MODE</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To start all questions in the test bank, use command<br>
+start mode/normal
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>start mode/normal</code></p>
+</li>
+<li>
+<p><code>start mode/custom cat/uml /diff/1 timer/20</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-a-question-code-add-code"><a class="link" href="#adding-a-question-code-add-code">3.2. Adding a question: <code>add</code></a></h3>
+<div class="paragraph">
+<p>Adds a question to the test bank</p>
+</div>
+<div class="paragraph">
+<p>Format: `add type/TYPE q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER x/WRONG_ANSWER&#8230;&#8203; `</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>The following are the valid answer formats for each question type:<br>
+<strong>MCQ</strong>: 1 Correct answer and 3 Wrong answers.<br>
+<strong>True &amp; False</strong>: 1 Correct answer (i.e. True / False) wrong answers omitted.<br>
+<strong>SAQ</strong>: Multiple correct answers, wrong answers omitted.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>add type/mcq q/According to the textbook, which kind of project is more difficult? cat/Week 2 diff/1
+x/Greenfield x/Brownfield y/None of the others x/Padifield</code></p>
+</li>
+<li>
+<p><code>add type/tf q/OODMs are Class Diagrams cat/uml diff/2 y/true</code></p>
+</li>
+<li>
+<p><code>add type/saq q/What does UML stands for? cat/cs2103 diff/1 y/unified modeling language</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.3. Editing a question : <code>edit</code></a></h3>
+<div class="paragraph">
+<p>Edits an existing question in the test bank.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>edit INDEX [q/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Edits the question at the specified <code>INDEX</code>. The index refers to the index number shown in the displayed question list.
+The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>At least one of the optional fields must be provided.</p>
+</li>
+<li>
+<p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p>When editing category and/or difficulty, the existing category and/or difficulty of the question will be removed
+i.e adding of category and/or difficulty is not cumulative.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>edit 1 q/According the the textbook, is greenfield or brownfield tougher?</code><br>
+Edits the the first question to "According the the textbook, is greenfield or brownfield tougher?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quiz-mode"><a class="link" href="#quiz-mode">4. Quiz Mode</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="normal-mode"><a class="link" href="#normal-mode">4.1. Normal Mode</a></h3>
+<div class="paragraph">
+<p>Levels are separated by difficulty. At the end of each level, user has the choice to move on to the next level or exit the quiz.
+The user is given 30 seconds to answer each question.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="arcade-mode"><a class="link" href="#arcade-mode">4.2. Arcade Mode</a></h3>
+<div class="paragraph">
+<p>Levels are separated by difficulty. If user enters a wrong answer before finishing the quiz. Quiz will end and display the results.
+The user is given 20 seconds to answer each question in level 1. Subsequent level timers are 5 seconds faster than the previous level with
+level 3 giving the user 10 seconds to answer each question.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="custom-mode"><a class="link" href="#custom-mode">4.3. Custom Mode</a></h3>
+<div class="paragraph">
+<p>Category, Difficulty and Timer (must be above 1 second) can be customised by the user. Levels are also sorted according to
+difficulty.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="answering-questions"><a class="link" href="#answering-questions">4.4. Answering Questions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>MCQ</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Answers can only be A, B, C, or D (Case insensitive)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>True and False</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Answers can only be True (T) / False (F) (Case insensitive)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SAQ</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Answers are open ended. Revision tool uses NLP to parse answers and determine whether they are correct.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Help</strong> : <code>help</code></p>
+</li>
+<li>
+<p><strong>Start</strong> <code>start mode/MODE</code><br>
+e.g. <code>start mode/normal</code></p>
+</li>
+<li>
+<p><strong>Exit</strong> <code>exit</code></p>
+</li>
+<li>
+<p><strong>Status</strong> : <code>status</code></p>
+</li>
+<li>
+<p><strong>Add</strong> <code>add type/TYPE q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER x/WRONG_ANSWER&#8230;&#8203;</code><br>
+e.g. <code>add type/mcq q/According to the textbook, which kind of project is more difficult? cat/Week 2 diff/1
+x/Greenfield x/Brownfield y/None of the others of the above x/Padifield</code></p>
+</li>
+<li>
+<p><strong>Edit</strong> : <code>edit INDEX [q/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code><br>
+e.g. <code>edit 1 q/According the the textbook, is greenfield or brownfield tougher?</code></p>
+</li>
+<li>
+<p><strong>Delete</strong> : <code>delete INDEX [MORE_INDICES]</code><br>
+e.g. <code>delete 1 3 5</code></p>
+</li>
+<li>
+<p><strong>List</strong> : <code>list [cat/CATEGORY] [diff/DIFFICULTY]</code>
+e.g. <code>list cat/requiments diff/2</code></p>
+</li>
+<li>
+<p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
+e.g. <code>find user story</code></p>
+</li>
+<li>
+<p><strong>Clear</strong> : <code>clear</code></p>
+</li>
+<li>
+<p><strong>Restore</strong> : <code>restore</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">6. Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="managing-parsing-in-configuration-and-quiz-mode"><a class="link" href="#managing-parsing-in-configuration-and-quiz-mode">6.1. Managing parsing in Configuration and Quiz Mode</a></h4>
+<div class="paragraph">
+<p>During a quiz session a <code>QuizParser</code> instead of <code>Parser</code> is used.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ParserClassDiagram.png" alt="ParserClassDiagram" width="500">
+</div>
+<div class="title">Figure 1. Class Diagram of ParserManager to display how parsers are created in both modes.</div>
+</div>
+<div class="paragraph">
+<p>As different commands are accepted in Configuration and Quiz Mode, the <code>ParserManager</code> class uses overloaded methods to
+decide the valid commands in each mode. The following are the parsers used in each mode:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ABCParser:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>AddCommandParser</p>
+</li>
+<li>
+<p>DeleteCommandParser</p>
+</li>
+<li>
+<p>EditCommandParser</p>
+</li>
+<li>
+<p>FindCommandParser</p>
+</li>
+<li>
+<p>ListCommandParser</p>
+</li>
+<li>
+<p>StartCommandParser</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>XYZParser:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>McqInputCommandParser</p>
+</li>
+<li>
+<p>TfInputCommandParser</p>
+</li>
+<li>
+<p>SaqInputCommandParser</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="parsing-in-configuration-mode"><a class="link" href="#parsing-in-configuration-mode">6.2. Parsing in Configuration Mode</a></h3>
+<div class="paragraph">
+<p>In Configuration Mode, a single string is passed as an argument to the execute method.
+Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
+</div>
+<div class="title">Figure 2. Interactions Inside the Logic Component for the <code>delete 1</code> Command</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The lifeline for <code>DeleteCommandParser</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="parsing-in-quiz-mode"><a class="link" href="#parsing-in-quiz-mode">6.3. Parsing in Quiz Mode</a></h3>
+<div class="paragraph">
+<p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the execute method.
+Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("c", answerable)</code> API call.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/QuizSequenceDiagram.png" alt="QuizSequenceDiagram" width="790">
+</div>
+<div class="title">Figure 3. Interactions Inside the Logic Component for the <code>c</code> input command.</div>
+</div>
+<div class="paragraph">
+<p>Key differences between parsing in Configuration Mode and Quiz Mode:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In Quiz Mode, <code>Answerable#isCorrect(answer)</code> is called from the <code>McqInputCommand</code> to check whether the user&#8217;s answer is correct.</p>
+</li>
+<li>
+<p>After which, the result is used to construct a <code>CommandResult</code> will be passed back to the <code>LogicManager</code></p>
+</li>
+<li>
+<p>Lastly, the <code>Model</code> is accessed to update the user&#8217;s score history.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>CommandResult</code> is built using a builder design to allow flexibility of values returned to the <code>LogicManager</code>.
+To guard against null values, default values are provided to every field in the <code>CommandResult</code> class upon construction.
+Objects that call <code>CommandResult</code> can choose to customise <code>CommandResult</code> according to their needs.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="the-code-answerable-code-class"><a class="link" href="#the-code-answerable-code-class">6.3.1. The <code>Answerable</code> Class</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AnswerableClassDiagram.png" alt="AnswerableClassDiagram">
+</div>
+<div class="title">Figure 4. Class Diagram of the Answerable Class</div>
+</div>
+<div class="paragraph">
+<p>The main class that the Revision Tool operates on is the <code>Answerable</code> class.</p>
+</div>
+<div class="paragraph">
+<p>Each <code>Answerable</code> class must have 1 <code>Question</code>, 1 <code>Difficulty</code> and can have any amount of categories associated with it.
+The amount of answers that an <code>Answerable</code> can have depends on its type.</p>
+</div>
+<div class="paragraph">
+<p>There are 3 subclasses of the <code>Answerable</code> Class which are: <code>Mcq</code>, <code>TrueFalse</code> and <code>Saq</code>. Each class defines it&#8217;s
+own rules on the validity of <code>Answer</code> s provided to it.</p>
+</div>
+<div class="paragraph">
+<p>The following are the rules of validity for each subclass:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mcq: 4 answers in total. 1 correct answer, 3 wrong answers.</p>
+</li>
+<li>
+<p>TrueFalse: Either 'true' or 'false' as its answer.</p>
+</li>
+<li>
+<p>Saq: Any amount of answers.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For all subclasses, there cannot be any duplicates of answers. For example, if an Mcq class has "option1" as one of its
+wrong answers, it cannot have "option1" as its correct answer or another wrong answer.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="quiz-mode-2"><a class="link" href="#quiz-mode-2">6.4. Quiz Mode</a></h3>
+<div class="sect3">
+<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">6.4.1. How the quiz works</a></h4>
+<div class="paragraph">
+<p>After the user has <code>start</code> ed the quiz, the application enters quiz mode. The following is the flow of events after a quiz
+session has started.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/QuizSessionActivityDiagram.png" alt="QuizSessionActivityDiagram" width="790">
+</div>
+<div class="title">Figure 5. Activity Diagram of a Quiz Session in <code>NormalMode</code></div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>After the user has started either a normal / custom mode quiz. He/she will be prompted to key in their answer.</p>
+</li>
+<li>
+<p>If the input is valid, the revision tool will display the subsequent question until the level / entire quiz has ended.</p>
+</li>
+<li>
+<p>If the input is invalid, the revision tool will prompt the user to key in their input again with guidance provided on
+the commands accepted.</p>
+</li>
+<li>
+<p>If the time limit is exceeded (e.g. 30 seconds in Normal Mode), the revision tool will mark the question as wrong and
+move on to the next question.</p>
+</li>
+<li>
+<p>Once a level has ended, the user will be given the choice to move on to the next level or exit the quiz.</p>
+</li>
+<li>
+<p>Once the entire quiz has ended, the user will be given the choice to restart or exit the quiz.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Arcade Mode, when a users enters a wrong answer, the quiz will end.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-08 07:00:02 UTC</div></div></div></body></html>
