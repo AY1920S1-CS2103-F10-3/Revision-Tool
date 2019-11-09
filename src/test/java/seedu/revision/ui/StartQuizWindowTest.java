@@ -1,4 +1,4 @@
-package guitests;
+package seedu.revision.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -34,8 +34,6 @@ import seedu.revision.model.quiz.NormalMode;
 import seedu.revision.storage.Storage;
 import seedu.revision.stubs.HistoryStub;
 import seedu.revision.stubs.StorageStub;
-import seedu.revision.ui.AlertDialog;
-import seedu.revision.ui.StartQuizWindow;
 
 @ExtendWith(ApplicationExtension.class)
 public class StartQuizWindowTest {

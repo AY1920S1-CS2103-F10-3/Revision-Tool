@@ -16,8 +16,8 @@ public class AnswerableCardHandle extends NodeHandle<Node> {
     private static final String QUESTION_TYPE_FIELD_ID = "#questionType";
     private static final String QUESTION_FIELD_ID = "#question";
     private static final String DIFFICULTY_FIELD_ID = "#difficulty";
-    private static final String ANSWERS_FIELD_ID = "#email";
-    private static final String CATEGORIES_FIELD_ID = "#tags";
+    private static final String ANSWERS_FIELD_ID = "#answerPane";
+    private static final String CATEGORIES_FIELD_ID = "#categories";
 
     private final Label idLabel;
     private final Label questionTypeLabel;
