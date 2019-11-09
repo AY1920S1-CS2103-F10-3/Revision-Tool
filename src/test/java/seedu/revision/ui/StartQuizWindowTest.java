@@ -115,17 +115,25 @@ public class StartQuizWindowTest {
         assertEquals(previousProgress, currentProgress);
     }
 
-    //pass
+    /**
+     * Enters a valid answer and checks that an alert is shown when the end of the level has been reached.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
     @Test
     public void typeValidAnswer_endOfLevelReached_shouldShowNextLevelAlert(FxRobot robot) {
         robot.clickOn(".commandTextField");
         robot.write(ANSWER_VALID_MCQ);
         robot.type(KeyCode.ENTER);
-        int numberOfAlerts = getNumberOfAlertsShown(robot, AlertDialog.NEXT_LEVEL_TITLE);
+        int numberOfAlerts = getNumberOfWindowsShown(robot, AlertDialog.NEXT_LEVEL_TITLE);
         assertEquals(1, numberOfAlerts);
         robot.type(KeyCode.ENTER);
     }
 
+    /**
+     * Enters a 3 valid answers (simulating each level of the quiz) and checks that an alert is shown when the
+     * end of the quiz has been reached.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
     @Test
     public void typeValidAnswer_endOfQuizReached_shouldShowEndAlert(FxRobot robot) {
         robot.clickOn(".commandTextField");
@@ -138,30 +146,27 @@ public class StartQuizWindowTest {
         robot.write(ANSWER_VALID_SAQ);
         robot.type(KeyCode.ENTER);
         assertEquals("Level 3", startQuizWindow.getLevelLabel().getLevelLabel().getText());
-        int numberOfAlerts = getNumberOfAlertsShown(robot, AlertDialog.END_QUIZ_TITLE);
+        int numberOfAlerts = getNumberOfWindowsShown(robot, AlertDialog.END_QUIZ_TITLE);
         assertEquals(1, numberOfAlerts);
         robot.type(KeyCode.ENTER);
     }
 
+    /**
+     * Enters the exit command and checks whether the window returns to configuration mode and quiz mode is dismissed.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
     @Test
     public void typeExit_shouldReturnFromQuizModeToConfigurationMode(FxRobot robot) {
         robot.clickOn(".commandTextField");
         robot.write(COMMAND_EXIT);
         robot.type(KeyCode.ENTER);
-        int numberOfAlerts = getNumberOfAlertsShown(robot, "CS2103 Revision Tool");
-        assertEquals(1, numberOfAlerts);
+        int numberOfMainWindows = getNumberOfWindowsShown(robot, "CS2103 Revision Tool");
+        assertEquals(1, numberOfMainWindows);
+        int numberOfQuizWindows = getNumberOfWindowsShown(robot, "Quiz Mode");
+        assertEquals(0, numberOfQuizWindows);
     }
 
-    @Test
-    public void typeExit_shouldNotShowQuizMode(FxRobot robot) {
-        robot.clickOn(".commandTextField");
-        robot.write(COMMAND_EXIT);
-        robot.type(KeyCode.ENTER);
-        int numberOfAlerts = getNumberOfAlertsShown(robot, "Quiz Mode");
-        assertEquals(0, numberOfAlerts);
-    }
-
-    private int getNumberOfAlertsShown(FxRobot fxRobot, String stageTitle) {
+    private int getNumberOfWindowsShown(FxRobot fxRobot, String stageTitle) {
         return (int) fxRobot.listTargetWindows().stream()
                 .filter(window -> window instanceof Stage && ((Stage) window).getTitle().equals(stageTitle))
                 .count();

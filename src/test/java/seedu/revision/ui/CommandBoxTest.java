@@ -75,33 +75,33 @@ class CommandBoxTest extends GuiUnitTest {
      * Tests a valid input. Should be empty after "ENTER" is keyed in.
      */
     @Test
-    public void commandBox_typeEnterAfterValidInput_shouldBeEmpty() {
-        assertBehaviorForSuccessfulCommand();
+    public void commandBox_typeEnterAfterValidInput_shouldBeEmpty(FxRobot robot) {
+        assertBehaviorForSuccessfulCommand(robot);
     }
 
     /**
      * Tests an invalid input. Should be empty after "ENTER" is keyed in.
      */
     @Test
-    public void commandBox_typeEnterAfterInValidInput_shouldNotAccept() {
-        assertBehaviorForFailedCommand();
+    public void commandBox_typeEnterAfterInValidInput_shouldNotAccept(FxRobot robot) {
+        assertBehaviorForFailedCommand(robot);
     }
 
     /**
      * Tests an invalid input after a valid input. Should not be empty and should show error style class.
      */
     @Test
-    public void commandBox_startingWithSuccessfulCommand() {
-        assertBehaviorForSuccessfulCommand();
-        assertBehaviorForFailedCommand();
+    public void commandBox_startingWithSuccessfulCommand(FxRobot robot) {
+        assertBehaviorForSuccessfulCommand(robot);
+        assertBehaviorForFailedCommand(robot);
     }
 
     /**
      * Tests an that style class returns to default after entering an invalid input and typing again afterwards.
      */
     @Test
-    public void commandBox_handleKeyPress() {
-        assertBehaviorForFailedCommand();
+    public void commandBox_handleKeyPress(FxRobot robot) {
+        assertBehaviorForFailedCommand(robot);
         guiRobot.push(KeyCode.ESCAPE);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
 
@@ -114,10 +114,10 @@ class CommandBoxTest extends GuiUnitTest {
      *      - the text remains <br>
      *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
-    private void assertBehaviorForFailedCommand() {
-        guiRobot.clickOn(".commandTextField");
-        guiRobot.write(COMMAND_INVALID);
-        guiRobot.type(KeyCode.ENTER);
+    private void assertBehaviorForFailedCommand(FxRobot robot) {
+        robot.clickOn(".commandTextField");
+        robot.write(COMMAND_INVALID);
+        robot.type(KeyCode.ENTER);
         assertEquals(COMMAND_INVALID, commandBoxHandle.getInput());
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
@@ -127,12 +127,11 @@ class CommandBoxTest extends GuiUnitTest {
      *      - the text is cleared <br>
      *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
-    private void assertBehaviorForSuccessfulCommand() {
-        guiRobot.clickOn(".commandTextField");
-        guiRobot.write(COMMAND_SUCCESS);
-        guiRobot.type(KeyCode.DOWN, KeyCode.ENTER, KeyCode.ENTER);
-        FxAssert.verifyThat(commandBox.getAutoCompleteField(), TextInputControlMatchers.hasText(""));
-        //assertEquals("", commandBox.getAutoCompleteField().getText());
+    private void assertBehaviorForSuccessfulCommand(FxRobot robot) {
+        robot.clickOn(".commandTextField");
+        robot.write(COMMAND_SUCCESS);
+        robot.type(KeyCode.DOWN, KeyCode.ENTER, KeyCode.ENTER);
+        assertEquals("", commandBox.getAutoCompleteField().getText());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 }
