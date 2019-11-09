@@ -20,24 +20,6 @@
 <ul class="sectlevel2">
 <li><a href="#starting-the-quiz-code-start-code">3.1. Starting the quiz: <code>start</code>.</a></li>
 <li><a href="#adding-a-question-code-add-code">3.2. Adding a question: <code>add</code></a></li>
-<li><a href="#editing-a-question-code-edit-code">3.3. Editing a question : <code>edit</code></a></li>
-</ul>
-</li>
-<li><a href="#quiz-mode">4. Quiz Mode</a>
-<ul class="sectlevel2">
-<li><a href="#normal-mode">4.1. Normal Mode</a></li>
-<li><a href="#arcade-mode">4.2. Arcade Mode</a></li>
-<li><a href="#custom-mode">4.3. Custom Mode</a></li>
-<li><a href="#answering-questions">4.4. Answering Questions</a></li>
-</ul>
-</li>
-<li><a href="#command-summary">5. Command Summary</a></li>
-<li><a href="#contributions-to-the-developer-guide">6. Contributions to the Developer Guide</a>
-<ul class="sectlevel3">
-<li><a href="#managing-parsing-in-configuration-and-quiz-mode">6.1. Managing parsing in Configuration and Quiz Mode</a></li>
-<li><a href="#parsing-in-configuration-mode">6.2. Parsing in Configuration Mode</a></li>
-<li><a href="#parsing-in-quiz-mode">6.3. Parsing in Quiz Mode</a></li>
-<li><a href="#quiz-mode-2">6.4. Quiz Mode</a></li>
 </ul>
 </li>
 </ul>
@@ -209,7 +191,7 @@ of many of the other features.</p>
 <div class="sect2">
 <h3 id="starting-the-quiz-code-start-code"><a class="link" href="#starting-the-quiz-code-start-code">3.1. Starting the quiz: <code>start</code>.</a></h3>
 <div class="paragraph">
-<p>User can start by choosing the mode of the quiz. (normal / arcade / custom). See <a href="#quiz-mode">Section 4, &#8220;Quiz Mode&#8221;</a> for in-quiz commands.</p>
+<p>User can start by choosing the mode of the quiz. (normal / arcade / custom). See <a href="#Quiz Mode">[Quiz Mode]</a> for in-quiz commands.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>start mode/MODE</code></p>
@@ -255,9 +237,7 @@ start mode/normal
 <p>The following are the valid answer formats for each question type:<br>
 <strong>MCQ</strong>: 1 Correct answer and 3 Wrong answers.<br>
 <strong>True &amp; False</strong>: 1 Correct answer (i.e. True / False) wrong answers omitted.<br>
-<strong>SAQ</strong>: Multiple correct answers, wrong answers omitted.</p>
-</div>
-</div>
+<strong>SAQ</strong>: Multiple correct answers, no wrong answers.</p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -276,17 +256,17 @@ x/Greenfield x/Brownfield y/None of the others x/Padifield</code></p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>=== Editing a question : <code>edit</code></p>
 </div>
-<div class="sect2">
-<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.3. Editing a question : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing question in the test bank.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>edit INDEX [q/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code></p>
 </div>
-<div class="sidebarblock">
-<div class="content">
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -305,8 +285,8 @@ i.e adding of category and/or difficulty is not cumulative.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p>Examples:</p>
 </div>
@@ -318,76 +298,37 @@ Edits the the first question to "According the the textbook, is greenfield or br
 </li>
 </ul>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="quiz-mode"><a class="link" href="#quiz-mode">4. Quiz Mode</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="normal-mode"><a class="link" href="#normal-mode">4.1. Normal Mode</a></h3>
 <div class="paragraph">
-<p>Levels are separated by difficulty. At the end of each level, user has the choice to move on to the next level or exit the quiz.
+<p>== Quiz Mode</p>
+</div>
+<div class="paragraph">
+<p>=== Normal Mode
+Levels are separated by difficulty. At the end of each level, user has the choice to move on to the next level or exit the quiz.
 The user is given 30 seconds to answer each question.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="arcade-mode"><a class="link" href="#arcade-mode">4.2. Arcade Mode</a></h3>
 <div class="paragraph">
-<p>Levels are separated by difficulty. If user enters a wrong answer before finishing the quiz. Quiz will end and display the results.
+<p>=== Arcade Mode
+Levels are separated by difficulty. If user enters a wrong answer before finishing the quiz. Quiz will end and display the results.
 The user is given 20 seconds to answer each question in level 1. Subsequent level timers are 5 seconds faster than the previous level with
 level 3 giving the user 10 seconds to answer each question.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="custom-mode"><a class="link" href="#custom-mode">4.3. Custom Mode</a></h3>
 <div class="paragraph">
-<p>Category, Difficulty and Timer (must be above 1 second) can be customised by the user. Levels are also sorted according to
+<p>=== Custom Mode
+Category, Difficulty and Timer (must be above 1 second) can be customised by the user. Levels are also sorted according to
 difficulty.</p>
 </div>
+<div class="paragraph">
+<p>=== Answering Questions
+* MCQ
+<strong> Answers can only be A, B, C, or D (Case insensitive)
+* True and False
+</strong> Answers can only be True (T) / False (F) (Case insensitive)
+* SAQ
+** Answers are open ended. Revision tool uses NLP to parse answers and determine whether they are correct.</p>
 </div>
-<div class="sect2">
-<h3 id="answering-questions"><a class="link" href="#answering-questions">4.4. Answering Questions</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p>MCQ</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Answers can only be A, B, C, or D (Case insensitive)</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>== Command Summary</p>
 </div>
-</li>
-<li>
-<p>True and False</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Answers can only be True (T) / False (F) (Case insensitive)</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>SAQ</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Answers are open ended. Revision tool uses NLP to parse answers and determine whether they are correct.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
-<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -432,11 +373,9 @@ e.g. <code>find user story</code></p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>== Contributions to the Developer Guide</p>
 </div>
-</div>
-<div class="sect1">
-<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">6. Contributions to the Developer Guide</a></h2>
-<div class="sectionbody">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 100%;">
@@ -447,10 +386,9 @@ e.g. <code>find user story</code></p>
 </tr>
 </tbody>
 </table>
-<div class="sect3">
-<h4 id="managing-parsing-in-configuration-and-quiz-mode"><a class="link" href="#managing-parsing-in-configuration-and-quiz-mode">6.1. Managing parsing in Configuration and Quiz Mode</a></h4>
 <div class="paragraph">
-<p>During a quiz session a <code>QuizParser</code> instead of <code>Parser</code> is used.</p>
+<p>==== Managing parsing in Configuration and Quiz Mode
+During a quiz session a <code>QuizParser</code> instead of <code>Parser</code> is used.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -507,11 +445,9 @@ decide the valid commands in each mode. The following are the parsers used in ea
 </li>
 </ul>
 </div>
-</div>
-<div class="sect2">
-<h3 id="parsing-in-configuration-mode"><a class="link" href="#parsing-in-configuration-mode">6.2. Parsing in Configuration Mode</a></h3>
 <div class="paragraph">
-<p>In Configuration Mode, a single string is passed as an argument to the execute method.
+<p>=== Parsing in Configuration Mode
+In Configuration Mode, a single string is passed as an argument to the execute method.
 Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
 </div>
 <div class="imageblock">
@@ -532,11 +468,9 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 </tr>
 </table>
 </div>
-</div>
-<div class="sect2">
-<h3 id="parsing-in-quiz-mode"><a class="link" href="#parsing-in-quiz-mode">6.3. Parsing in Quiz Mode</a></h3>
 <div class="paragraph">
-<p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the execute method.
+<p>=== Parsing in Quiz Mode
+In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the execute method.
 Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("c", answerable)</code> API call.</p>
 </div>
 <div class="imageblock">
@@ -575,8 +509,9 @@ Objects that call <code>CommandResult</code> can choose to customise <code>Comma
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="the-code-answerable-code-class"><a class="link" href="#the-code-answerable-code-class">6.3.1. The <code>Answerable</code> Class</a></h4>
+<div class="paragraph">
+<p>==== The <code>Answerable</code> Class</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="../images/AnswerableClassDiagram.png" alt="AnswerableClassDiagram">
@@ -623,14 +558,10 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="quiz-mode-2"><a class="link" href="#quiz-mode-2">6.4. Quiz Mode</a></h3>
-<div class="sect3">
-<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">6.4.1. How the quiz works</a></h4>
 <div class="paragraph">
-<p>After the user has <code>start</code> ed the quiz, the application enters quiz mode. The following is the flow of events after a quiz
+<p>=== Quiz Mode
+==== How the quiz works
+After the user has <code>start</code> ed the quiz, the application enters quiz mode. The following is the flow of events after a quiz
 session has started.</p>
 </div>
 <div class="imageblock">
@@ -678,4 +609,5 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-08 07:00:02 UTC</div></div></div></body></html>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-09 08:55:02 UTC</div></div></div></body></html>
