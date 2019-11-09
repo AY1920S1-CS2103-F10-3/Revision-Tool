@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.testfx.framework.junit5.ApplicationExtension;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
@@ -16,7 +14,6 @@ import seedu.revision.logic.commands.exceptions.CommandException;
 import seedu.revision.logic.commands.main.CommandResultBuilder;
 import seedu.revision.logic.commands.main.ListCommand;
 
-@ExtendWith(ApplicationExtension.class)
 class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_SUCCESS = ListCommand.COMMAND_WORD;
@@ -48,12 +45,12 @@ class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_success() {
+    public void commandBox_validInput_success() {
         assertBehaviorForSuccessfulCommand();
     }
 
     @Test
-    public void commandBox_failure() {
+    public void commandBox_invalidInput_failure() {
         assertBehaviorForFailedCommand();
     }
 
@@ -102,7 +99,6 @@ class CommandBoxTest extends GuiUnitTest {
      *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
     private void assertBehaviorForSuccessfulCommand() {
-
         commandBoxHandle.run(COMMAND_SUCCESS);
         assertEquals("", commandBoxHandle.getInput());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
