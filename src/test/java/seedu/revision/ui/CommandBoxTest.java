@@ -48,6 +48,16 @@ class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void commandBox_success() {
+        assertBehaviorForSuccessfulCommand();
+    }
+
+    @Test
+    public void commandBox_failure() {
+        assertBehaviorForFailedCommand();
+    }
+
+    @Test
     public void commandBox_startingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
