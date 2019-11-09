@@ -31,13 +31,13 @@ class CommandBoxTest extends GuiUnitTest {
 
     private CommandBoxHandle commandBoxHandle;
 
-//    @BeforeAll
-//    public static void headless() {
-//        System.setProperty("testfx.robot", "glass");
-//        System.setProperty("testfx.headless", "true");
-//        System.setProperty("prism.order", "sw");
-//        System.setProperty("prism.text", "t2k");
-//    }
+    @BeforeAll
+    public static void headless() {
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
+    }
 
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
