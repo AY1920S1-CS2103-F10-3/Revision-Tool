@@ -31,13 +31,13 @@ class CommandBoxTest extends GuiUnitTest {
 
     private CommandBoxHandle commandBoxHandle;
 
-    @BeforeAll
-    public static void headless() {
-        System.setProperty("testfx.robot", "glass");
-        System.setProperty("testfx.headless", "true");
-        System.setProperty("prism.order", "sw");
-        System.setProperty("prism.text", "t2k");
-    }
+//    @BeforeAll
+//    public static void headless() {
+//        System.setProperty("testfx.robot", "glass");
+//        System.setProperty("testfx.headless", "true");
+//        System.setProperty("prism.order", "sw");
+//        System.setProperty("prism.text", "t2k");
+//    }
 
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
@@ -126,6 +126,7 @@ class CommandBoxTest extends GuiUnitTest {
         guiRobot.clickOn(".commandTextField");
         guiRobot.write(COMMAND_SUCCESS);
         guiRobot.type(KeyCode.DOWN, KeyCode.ENTER, KeyCode.ENTER);
+        assertEquals("", commandBox.getAutoCompleteField().getText());
         assertEquals("", commandBoxHandle.getInput());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }

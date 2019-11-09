@@ -91,10 +91,7 @@ public class StartQuizWindowTest {
     public void typeValidAnswer_shouldProgressToNextQuestion(FxRobot robot) {
         robot.clickOn(".commandTextField");
         double previousProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
-        //robot.type(KeyCode.A);
         robot.write(ANSWER_VALID_MCQ);
-        //startQuizWindow.getCommandBox().getCommandTextField().fireEvent(new ActionEvent());
         robot.type(KeyCode.ENTER);
         double currentProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
         assertNotEquals(previousProgress, currentProgress);
@@ -105,8 +102,6 @@ public class StartQuizWindowTest {
     public void typeInvalidAnswer_shouldNotProgressToNextQuestion(FxRobot robot) {
         double previousProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
         robot.clickOn(".commandTextField");
-        //robot.type(KeyCode.X);
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_INVALID);
         robot.write(ANSWER_INVALID);
         robot.type(KeyCode.ENTER);
         double currentProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
@@ -117,7 +112,6 @@ public class StartQuizWindowTest {
     @Test
     public void typeValidAnswer_endOfLevelReached_shouldShowNextLevelAlert(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
         robot.write(ANSWER_VALID_MCQ);
         robot.type(KeyCode.ENTER);
         int numberOfAlerts = getNumberOfAlertsShown(robot, AlertDialog.NEXT_LEVEL_TITLE);
@@ -128,16 +122,16 @@ public class StartQuizWindowTest {
     @Test
     public void typeValidAnswer_endOfQuizReached_shouldShowEndAlert(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
-        //robot.write(ANSWER_VALID_MCQ);
+        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
+        robot.write(ANSWER_VALID_MCQ);
         robot.type(KeyCode.ENTER);
         robot.type(KeyCode.ENTER); //Go to next level
-        startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_TRUEFALSE);
-        //robot.write(ANSWER_VALID_TRUEFALSE);
+        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_TRUEFALSE);
+        robot.write(ANSWER_VALID_TRUEFALSE);
         robot.type(KeyCode.ENTER);
         robot.type(KeyCode.ENTER); //Go to next level
-        startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_SAQ);
-        //robot.write(ANSWER_VALID_SAQ);
+        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_SAQ);
+        robot.write(ANSWER_VALID_SAQ);
         robot.type(KeyCode.ENTER);
         assertEquals("Level 3", startQuizWindow.getLevelLabel().getLevelLabel().getText());
         int numberOfAlerts = getNumberOfAlertsShown(robot, AlertDialog.END_QUIZ_TITLE);
@@ -148,9 +142,9 @@ public class StartQuizWindowTest {
     @Test
     public void typeExit_shouldReturnFromQuizModeToConfigurationMode(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        startQuizWindow.getCommandBox().getCommandTextField().setText(COMMAND_EXIT);
-        robot.sleep(250);
-        //robot.write(COMMAND_EXIT);
+        //startQuizWindow.getCommandBox().getCommandTextField().setText(COMMAND_EXIT);
+        //robot.sleep(250);
+        robot.write(COMMAND_EXIT);
         robot.type(KeyCode.ENTER);
         int numberOfAlerts = getNumberOfAlertsShown(robot, "CS2103 Revision Tool");
         assertEquals(1, numberOfAlerts);
@@ -159,9 +153,9 @@ public class StartQuizWindowTest {
     @Test
     public void typeExit_shouldNotShowQuizMode(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        startQuizWindow.getCommandBox().getCommandTextField().setText(COMMAND_EXIT);
-        robot.sleep(250);
-        //robot.write(COMMAND_EXIT);
+        //startQuizWindow.getCommandBox().getCommandTextField().setText(COMMAND_EXIT);
+        //robot.sleep(250);
+        robot.write(COMMAND_EXIT);
         robot.type(KeyCode.ENTER);
         int numberOfAlerts = getNumberOfAlertsShown(robot, "Quiz Mode");
         assertEquals(0, numberOfAlerts);
