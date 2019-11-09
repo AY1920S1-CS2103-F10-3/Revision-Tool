@@ -32,7 +32,7 @@ class CommandBoxTest extends GuiUnitTest {
     private CommandBoxHandle commandBoxHandle;
 
     @BeforeAll
-    public static void headless() {
+    public static void runHeadless() {
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
         System.setProperty("prism.order", "sw");
@@ -65,10 +65,9 @@ class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Checks the initial state of the command box.
-     * @param robot - Will be injected by the test runner.
      */
     @Test
-    public void commandBox_noInput_shouldBeEmpty(FxRobot robot) {
+    public void commandBox_noInput_shouldBeEmpty() {
         FxAssert.verifyThat(commandBox.getAutoCompleteField(), TextInputControlMatchers.hasText(""));
     }
 
@@ -88,12 +87,18 @@ class CommandBoxTest extends GuiUnitTest {
         assertBehaviorForFailedCommand();
     }
 
+    /**
+     * Tests an invalid input after a valid input. Should not be empty and should show error style class.
+     */
     @Test
     public void commandBox_startingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
     }
 
+    /**
+     * Tests an that style class returns to default after entering an invalid input and typing again afterwards.
+     */
     @Test
     public void commandBox_handleKeyPress() {
         assertBehaviorForFailedCommand();
@@ -126,8 +131,8 @@ class CommandBoxTest extends GuiUnitTest {
         guiRobot.clickOn(".commandTextField");
         guiRobot.write(COMMAND_SUCCESS);
         guiRobot.type(KeyCode.DOWN, KeyCode.ENTER, KeyCode.ENTER);
-        assertEquals("", commandBox.getAutoCompleteField().getText());
-        assertEquals("", commandBoxHandle.getInput());
+        FxAssert.verifyThat(commandBox.getAutoCompleteField(), TextInputControlMatchers.hasText(""));
+        //assertEquals("", commandBox.getAutoCompleteField().getText());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 }

@@ -61,7 +61,7 @@ public class StartQuizWindowTest {
     private StartQuizWindow startQuizWindow;
 
     @BeforeAll
-    public static void headless() {
+    public static void runHeadless() {
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
         System.setProperty("prism.order", "sw");
@@ -69,7 +69,7 @@ public class StartQuizWindowTest {
     }
 
     /**
-     * Will be called with {@code @Before} semantics, i. e. before each test method.
+     * Will be called with {@code @Before} semantics, i.e. before each test method.
      *
      * @param stage - Will be injected by the test runner.
      */
@@ -87,6 +87,10 @@ public class StartQuizWindowTest {
         stage.show();
     }
 
+    /**
+     * Enters a valid answer and checks that the progress in the progress bar has increased.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
     @Test
     public void typeValidAnswer_shouldProgressToNextQuestion(FxRobot robot) {
         robot.clickOn(".commandTextField");
@@ -97,7 +101,10 @@ public class StartQuizWindowTest {
         assertNotEquals(previousProgress, currentProgress);
     }
 
-    //pass
+    /**
+     * Enters an invalid answer and checks that the progress in the progress bar has increased.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
     @Test
     public void typeInvalidAnswer_shouldNotProgressToNextQuestion(FxRobot robot) {
         double previousProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
@@ -122,15 +129,12 @@ public class StartQuizWindowTest {
     @Test
     public void typeValidAnswer_endOfQuizReached_shouldShowEndAlert(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
         robot.write(ANSWER_VALID_MCQ);
         robot.type(KeyCode.ENTER);
         robot.type(KeyCode.ENTER); //Go to next level
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_TRUEFALSE);
         robot.write(ANSWER_VALID_TRUEFALSE);
         robot.type(KeyCode.ENTER);
         robot.type(KeyCode.ENTER); //Go to next level
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_SAQ);
         robot.write(ANSWER_VALID_SAQ);
         robot.type(KeyCode.ENTER);
         assertEquals("Level 3", startQuizWindow.getLevelLabel().getLevelLabel().getText());
@@ -142,8 +146,6 @@ public class StartQuizWindowTest {
     @Test
     public void typeExit_shouldReturnFromQuizModeToConfigurationMode(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(COMMAND_EXIT);
-        //robot.sleep(250);
         robot.write(COMMAND_EXIT);
         robot.type(KeyCode.ENTER);
         int numberOfAlerts = getNumberOfAlertsShown(robot, "CS2103 Revision Tool");
@@ -153,8 +155,6 @@ public class StartQuizWindowTest {
     @Test
     public void typeExit_shouldNotShowQuizMode(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        //startQuizWindow.getCommandBox().getCommandTextField().setText(COMMAND_EXIT);
-        //robot.sleep(250);
         robot.write(COMMAND_EXIT);
         robot.type(KeyCode.ENTER);
         int numberOfAlerts = getNumberOfAlertsShown(robot, "Quiz Mode");
