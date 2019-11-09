@@ -3,18 +3,6 @@ language: java
 sudo: false   # Linux OS: run in container
 
 include:
-  # Ubuntu Linux (trusty) / Oracle JDK 11 / Headed (AWT Robot)
-  - os: linux
-    dist: trusty
-    jdk: openjdk11
-    env:
-      - _JAVA_OPTIONS="-Dtestfx.robot=awt"
-  # Ubuntu Linux (trusty) / Oracle JDK 11 / Headed (Glass Robot) / HiDPI
-  - os: linux
-    dist: trusty
-    jdk: openjdk11
-    env:
-      - _JAVA_OPTIONS="-Dtestfx.robot=glass -Dglass.gtk.uiScale=2.0"
   # Ubuntu Linux (trusty) / Oracle JDK 11 / Headless
   - os: linux
     dist: trusty
