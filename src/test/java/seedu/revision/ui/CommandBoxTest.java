@@ -2,7 +2,8 @@ package seedu.revision.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import guitests.guihandles.CommandBoxHandle;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,11 +13,9 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
-import java.util.ArrayList;
-
+import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-
 import seedu.revision.logic.commands.exceptions.CommandException;
 import seedu.revision.logic.commands.main.CommandResultBuilder;
 import seedu.revision.logic.commands.main.ListCommand;
