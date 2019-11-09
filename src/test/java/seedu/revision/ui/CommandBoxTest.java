@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,9 +27,17 @@ class CommandBoxTest extends GuiUnitTest {
 
     private CommandBoxHandle commandBoxHandle;
 
+    @BeforeAll
+    public static void headless() {
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
+    }
+
     @BeforeEach
     public void setUp() {
-        commandBox = new CommandBox(commandText -> {
+        CommandBox commandBox = new CommandBox(commandText -> {
             if (commandText.equals(COMMAND_SUCCESS)) {
                 return new CommandResultBuilder().withFeedBack("Command successful").build();
             }
