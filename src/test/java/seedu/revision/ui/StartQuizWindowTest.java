@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
@@ -59,6 +60,14 @@ public class StartQuizWindowTest {
 
     private StartQuizWindow startQuizWindow;
 
+    @BeforeAll
+    public static void headless() {
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
+    }
+
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
      *
@@ -83,8 +92,8 @@ public class StartQuizWindowTest {
         robot.clickOn(".commandTextField");
         double previousProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
         //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
-        robot.type(KeyCode.A);
-        //robot.write(ANSWER_VALID_MCQ);
+        //robot.type(KeyCode.A);
+        robot.write(ANSWER_VALID_MCQ);
         //startQuizWindow.getCommandBox().getCommandTextField().fireEvent(new ActionEvent());
         robot.type(KeyCode.ENTER);
         double currentProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
@@ -96,9 +105,9 @@ public class StartQuizWindowTest {
     public void typeInvalidAnswer_shouldNotProgressToNextQuestion(FxRobot robot) {
         double previousProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
         robot.clickOn(".commandTextField");
-        robot.type(KeyCode.X);
+        //robot.type(KeyCode.X);
         //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_INVALID);
-        //robot.write(ANSWER_INVALID);
+        robot.write(ANSWER_INVALID);
         robot.type(KeyCode.ENTER);
         double currentProgress = startQuizWindow.getProgressIndicatorBar().getCurrentProgress();
         assertEquals(previousProgress, currentProgress);
@@ -108,8 +117,8 @@ public class StartQuizWindowTest {
     @Test
     public void typeValidAnswer_endOfLevelReached_shouldShowNextLevelAlert(FxRobot robot) {
         robot.clickOn(".commandTextField");
-        startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
-        //robot.write(ANSWER_VALID_MCQ);
+        //startQuizWindow.getCommandBox().getCommandTextField().setText(ANSWER_VALID_MCQ);
+        robot.write(ANSWER_VALID_MCQ);
         robot.type(KeyCode.ENTER);
         int numberOfAlerts = getNumberOfAlertsShown(robot, AlertDialog.NEXT_LEVEL_TITLE);
         assertEquals(1, numberOfAlerts);
