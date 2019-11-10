@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">CS2103/T Revision Tool</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/AY1920S1-CS2103-F10-3/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>CS2103/T Revision Tool - Developer Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Group F10-3</code>      Since: <code>Aug 2019</code>      Licence: <code>MIT</code></p>
+<p>By: <code>Team F10-3</code>      Since: <code>Aug 2019</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -15,11 +15,9 @@
 <li><a href="#Design-Architecture">2.1. Architecture</a></li>
 <li><a href="#Design-Ui">2.2. UI component</a></li>
 <li><a href="#Design-Logic">2.3. Logic component</a></li>
-<li><a href="#parsing-in-configuration-mode">2.4. Parsing in Configuration Mode</a></li>
-<li><a href="#parsing-in-quiz-mode">2.5. Parsing in Quiz Mode</a></li>
-<li><a href="#Design-Model">2.6. Model component</a></li>
-<li><a href="#Design-Storage">2.7. Storage component</a></li>
-<li><a href="#Design-Commons">2.8. Common classes</a></li>
+<li><a href="#Design-Model">2.4. Model component</a></li>
+<li><a href="#Design-Storage">2.5. Storage component</a></li>
+<li><a href="#Design-Commons">2.6. Common classes</a></li>
 </ul>
 </li>
 <li><a href="#implementation">3. Implementation</a>
@@ -43,7 +41,7 @@
 <li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-person">G.2. Deleting a person</a></li>
+<li><a href="#deleting-an-answerable">G.2. Deleting an answerable</a></li>
 <li><a href="#saving-data">G.3. Saving data</a></li>
 </ul>
 </li>
@@ -290,9 +288,8 @@ decide the valid commands in each mode. The following are the parsers used in ea
 </ul>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="parsing-in-configuration-mode"><a class="link" href="#parsing-in-configuration-mode">2.4. Parsing in Configuration Mode</a></h3>
+<div class="sect3">
+<h4 id="parsing-in-configuration-mode"><a class="link" href="#parsing-in-configuration-mode">2.3.3. Parsing in Configuration Mode</a></h4>
 <div class="paragraph">
 <p>In Configuration Mode, a single string is passed as an argument to the execute method.
 Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
@@ -316,8 +313,8 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="parsing-in-quiz-mode"><a class="link" href="#parsing-in-quiz-mode">2.5. Parsing in Quiz Mode</a></h3>
+<div class="sect3">
+<h4 id="parsing-in-quiz-mode"><a class="link" href="#parsing-in-quiz-mode">2.3.4. Parsing in Quiz Mode</a></h4>
 <div class="paragraph">
 <p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the execute method.
 Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("c", answerable)</code> API call.</p>
@@ -359,8 +356,9 @@ Objects that call <code>CommandResult</code> can choose to customise <code>Comma
 </table>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="Design-Model"><a class="link" href="#Design-Model">2.6. Model component</a></h3>
+<h3 id="Design-Model"><a class="link" href="#Design-Model">2.4. Model component</a></h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/ModelClassDiagram.png" alt="ModelClassDiagram">
@@ -390,7 +388,7 @@ Objects that call <code>CommandResult</code> can choose to customise <code>Comma
 </ul>
 </div>
 <div class="sect3">
-<h4 id="the-code-answerable-code-class"><a class="link" href="#the-code-answerable-code-class">2.6.1. The <code>Answerable</code> Class</a></h4>
+<h4 id="the-code-answerable-code-class"><a class="link" href="#the-code-answerable-code-class">2.4.1. The <code>Answerable</code> Class</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/AnswerableClassDiagram.png" alt="AnswerableClassDiagram">
@@ -440,7 +438,7 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 </div>
 </div>
 <div class="sect2">
-<h3 id="Design-Storage"><a class="link" href="#Design-Storage">2.7. Storage component</a></h3>
+<h3 id="Design-Storage"><a class="link" href="#Design-Storage">2.5. Storage component</a></h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/StorageClassDiagram.png" alt="StorageClassDiagram">
@@ -465,9 +463,9 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 </div>
 </div>
 <div class="sect2">
-<h3 id="Design-Commons"><a class="link" href="#Design-Commons">2.8. Common classes</a></h3>
+<h3 id="Design-Commons"><a class="link" href="#Design-Commons">2.6. Common classes</a></h3>
 <div class="paragraph">
-<p>Classes used by multiple components are in the <code>seedu.addressbook.commons</code> package.</p>
+<p>Classes used by multiple components are in the <code>seedu.revision.commons</code> package.</p>
 </div>
 </div>
 </div>
@@ -979,25 +977,25 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 <h2 id="use-cases"><a class="link" href="#use-cases">Appendix C: Use Cases</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>(For all use cases below, the <strong>System</strong> is the <code>AddressBook</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+<p>(For all use cases below, the <strong>System</strong> is the <code>RevisionTool</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
-<h3 id="use-case-delete-person" class="discrete">Use case: Delete person</h3>
+<h3 id="use-case-delete-answerable" class="discrete">Use case: Delete answerable</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to list persons</p>
+<p>User requests to list answerables</p>
 </li>
 <li>
-<p>AddressBook shows a list of persons</p>
+<p>RevisionTool shows a list of answerables</p>
 </li>
 <li>
-<p>User requests to delete a specific person in the list</p>
+<p>User requests to delete a specific answerable in the list</p>
 </li>
 <li>
-<p>AddressBook deletes the person</p>
+<p>RevisionTool deletes the answerable</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1020,7 +1018,7 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. AddressBook shows an error message.</p>
+<p>3a1. RevisionTool shows an error message.</p>
 <div class="paragraph">
 <p>Use case resumes at step 2.</p>
 </div>
@@ -1141,7 +1139,7 @@ These instructions only provide a starting point for testers to work on; testers
 </li>
 <li>
 <p>Double-click the jar file<br>
-Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
+Expected: Shows the GUI with a set of sample answerables. The window size may not be optimum.</p>
 </li>
 </ol>
 </div>
@@ -1167,23 +1165,23 @@ Expected: The most recent window size and location is retained.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">G.2. Deleting a person</a></h3>
+<h3 id="deleting-an-answerable"><a class="link" href="#deleting-an-answerable">G.2. Deleting an answerable</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting a person while all persons are listed</p>
+<p>Deleting an answerable while all answerables are listed</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all persons using the <code>list</code> command. Multiple persons in the list.</p>
+<p>Prerequisites: List all answerables using the <code>list</code> command. Multiple answerables in the list.</p>
 </li>
 <li>
 <p>Test case: <code>delete 1</code><br>
-Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
+Expected: First answerable is deleted from the list. Details of the deleted answerable shown in the status message. Timestamp in the status bar is updated.</p>
 </li>
 <li>
 <p>Test case: <code>delete 0</code><br>
-Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.</p>
+Expected: No answerable is deleted. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 <li>
 <p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
@@ -1219,4 +1217,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-09 13:32:57 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 10:59:48 UTC</div></div></div></body></html>
