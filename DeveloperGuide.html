@@ -24,13 +24,14 @@
 <ul class="sectlevel2">
 <li><a href="#add-code-answerable-code-feature">3.1. Add <code>Answerable</code> feature</a></li>
 <li><a href="#Implementation-ConfigQuiz">3.2. Configuration and Quiz Mode</a></li>
-<li><a href="#saq-feature">3.3. Saq feature</a></li>
-<li><a href="#restore-feature">3.4. Restore feature</a></li>
-<li><a href="#autocomplete-feature">3.5. AutoComplete feature</a></li>
-<li><a href="#list-feature">3.6. List feature</a></li>
-<li><a href="#proposed-features">3.7. Proposed Features</a></li>
-<li><a href="#logging">3.8. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
+<li><a href="#Implementation-DataAnalytics">3.3. Data Analytics</a></li>
+<li><a href="#saq-feature">3.4. Saq feature</a></li>
+<li><a href="#restore-feature">3.5. Restore feature</a></li>
+<li><a href="#autocomplete-feature">3.6. AutoComplete feature</a></li>
+<li><a href="#list-feature">3.7. List feature</a></li>
+<li><a href="#proposed-features">3.8. Proposed Features</a></li>
+<li><a href="#logging">3.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -89,7 +90,7 @@ Refer to the <a href="UsingPlantUml.html">Using PlantUML guide</a> to learn how 
 </table>
 </div>
 <div class="paragraph">
-<p><code>Main</code> has two classes called <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/Main.java"><code>Main</code></a> and <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
+<p><code>Main</code> has two classes called <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/revision/Main.java"><code>Main</code></a> and <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/revision/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
 </div>
 <div class="ulist">
 <ul>
@@ -176,7 +177,7 @@ The following class plays an important role at the architecture level:</p>
 <div class="title">Figure 4. Structure of the UI Component</div>
 </div>
 <div class="paragraph">
-<p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
+<p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/revision/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
 <p>The abstract class <code>ParentWindow</code> consists of individual Ui parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>AnswerableListPanel</code>, <code>StatusBarFooter</code> etc. All Ui classes inherit from the abstract <code>UiPart</code> class.
@@ -286,7 +287,7 @@ user inputs, for both answerable input commands and configuration mode commands.
 </div>
 <div class="paragraph">
 <p><strong>API</strong> :
-<a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/logic/Logic.java"><code>Logic.java</code></a></p>
+<a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/revision/logic/Logic.java"><code>Logic.java</code></a></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -396,7 +397,7 @@ can be found in <a href="#Implementation-ConfigQuiz">Section 3.2, &#8220;Configu
 <div class="title">Figure 7. Structure of the Model Component</div>
 </div>
 <div class="paragraph">
-<p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
+<p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/revision/model/Model.java"><code>Model.java</code></a></p>
 </div>
 <div class="paragraph">
 <p>The <code>Model</code>,</p>
@@ -471,12 +472,12 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 <h3 id="Design-Storage"><a class="link" href="#Design-Storage">2.5. Storage component</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/StorageClassDiagram2.png" alt="StorageClassDiagram2">
+<img src="images/StorageDiagram.png" alt="StorageDiagram">
 </div>
 <div class="title">Figure 9. Structure of the Storage Component</div>
 </div>
 <div class="paragraph">
-<p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
+<p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/revision/storage/Storage.java"><code>Storage.java</code></a></p>
 </div>
 <div class="paragraph">
 <p>The <code>Storage</code> component,</p>
@@ -484,10 +485,10 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 <div class="ulist">
 <ul>
 <li>
-<p>can save <code>Question Bank</code> objects in json format and read it back.</p>
+<p>can save <code>Answerable</code> objects in json format and read it back.</p>
 </li>
 <li>
-<p>can save the Test Bank data in json format and read it back.</p>
+<p>can save the <code>Statistics</code> data in json format and read it back.</p>
 </li>
 </ul>
 </div>
@@ -832,9 +833,82 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 <div class="sect2">
-<h3 id="saq-feature"><a class="link" href="#saq-feature">3.3. Saq feature</a></h3>
+<h3 id="Implementation-DataAnalytics"><a class="link" href="#Implementation-DataAnalytics">3.3. Data Analytics</a></h3>
 <div class="sect3">
-<h4 id="how-saq-works"><a class="link" href="#how-saq-works">3.3.1. How Saq works</a></h4>
+<h4 id="overview"><a class="link" href="#overview">3.3.1. Overview</a></h4>
+<div class="paragraph">
+<p>There are many ways to present additional data to the user. While looking at user stories and deciding what our
+target audience will need, we realised that one important information needs to be present - the type of questions
+that user performs the weakest in. In order to present this information to the user, we needed a way to record
+results of quizzes, store these results, break down these results according to question types and report the type
+of questions that the user has performed badly in. These will be showcased in the <code>stats</code> command feature.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">3.3.2. Implementation</a></h4>
+<div class="sect4">
+<h5 id="updatestatistics-feature"><a class="link" href="#updatestatistics-feature">updateStatistics feature</a></h5>
+<div class="paragraph">
+<p>Quiz results are first recorded by successful completion of quizzes in Normal mode. At each quiz attempt,
+a <code>Statistics</code> object is first initiated. Every correct answer parsed by the user will trigger the code snippet below
+to <code>updateStatistics</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/updateStatistics.png" alt="updateStatistics" width="790">
+</div>
+</div>
+<div class="paragraph">
+<p>The sequence diagram for interactions between the <code>Logic</code> component and the <code>Model</code> component, from
+parsing of a correct answer in the <code>Logic</code> component to updating the <code>Statistics</code> class in the <code>Model</code> component is
+already shown above in <code>Figure 11</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="updatehistory-feature"><a class="link" href="#updatehistory-feature">updateHistory feature</a></h5>
+<div class="paragraph">
+<p>After the user successfully completes a quiz in Normal mode, <code>History</code> will be updated with this 'Statistics' object.
+<code>History</code> serves as a storage component for quiz results. This is done using the code snippet shown below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/updateHistory.png" alt="updateHistory" width="790">
+</div>
+</div>
+<div class="paragraph">
+<p>Given below is the sequence diagram for interactions between the`Ui`component, <code>Logic</code> component and the
+<code>Model</code> component, from handling the end of a quiz in the <code>Ui</code> component to updating the <code>History</code> class
+with the <code>Statistics</code> object in the <code>Model</code> component.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/updateHistorySequenceDiagram.png" alt="updateHistorySequenceDiagram" width="790">
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="stats-command-feature"><a class="link" href="#stats-command-feature">Stats Command Feature</a></h5>
+<div class="paragraph">
+<p>Given below is the sequence diagram for interactions within the <code>Logic</code> component for the <code>execute("stats")</code> API call.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/StatsSequenceDiagram.png" alt="StatsSequenceDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>The stats command will first activated the parser in <code>Logic</code> before executing the <code>StatsCommand</code>.
+This will then get the list of past statistics of quiz results from the model before sending a feedback
+to the user through the <code>CommandResultBuilder</code>. The <code>CommandResultBuilder</code> will trigger the
+<code>handleStats</code> method to finally show the list of statistics in the MainWindow through the <code>Ui</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saq-feature"><a class="link" href="#saq-feature">3.4. Saq feature</a></h3>
+<div class="sect3">
+<h4 id="how-saq-works"><a class="link" href="#how-saq-works">3.4.1. How Saq works</a></h4>
 <div class="paragraph">
 <p>The Saq input mechanism is facilitated by <code>SaqInputCommand</code>. It extends <code>Command</code> and execute the <code>CommandResult</code>. The input
 will be  parse into <code>SaqInputCommandParser</code> to check for input validity. If the input String is not valid (i.e the String
@@ -857,7 +931,7 @@ user input is correct or not.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="nlp-libraries"><a class="link" href="#nlp-libraries">3.3.2. NLP Libraries</a></h4>
+<h4 id="nlp-libraries"><a class="link" href="#nlp-libraries">3.4.2. NLP Libraries</a></h4>
 <div class="paragraph">
 <p>External libraries were used to determine if the user input is correct or not. <code>StanfordCoreNLP</code> library was used to
 check for sentimental value of user input and the list of correct answers. This helps to check for negative sentence
@@ -877,7 +951,7 @@ user input.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="validating-the-answer"><a class="link" href="#validating-the-answer">3.3.3. Validating the answer</a></h4>
+<h4 id="validating-the-answer"><a class="link" href="#validating-the-answer">3.4.3. Validating the answer</a></h4>
 <div class="paragraph">
 <p>The <code>execute</code> method will return the <code>CommandResult</code>, correct or wrong. The currentAnswerable of type <code>Saq</code> will call its
 <code>isCorrect</code> method and return a boolean value, true for correct answer and false for wrong answer. The sequence diagram
@@ -892,9 +966,9 @@ below shows the steps taken by the <code>isCorrect</code> method to determine if
 </div>
 </div>
 <div class="sect2">
-<h3 id="restore-feature"><a class="link" href="#restore-feature">3.4. Restore feature</a></h3>
+<h3 id="restore-feature"><a class="link" href="#restore-feature">3.5. Restore feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-3"><a class="link" href="#implementation-3">3.4.1. Implementation</a></h4>
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The restore mechanism is facilitated by <code>RestoreCommand</code>.
 It extends <code>Command</code> that will read a user command and execute the command result.
@@ -915,7 +989,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -951,9 +1025,9 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.5. AutoComplete feature</a></h3>
+<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.6. AutoComplete feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
+<h4 id="implementation-5"><a class="link" href="#implementation-5">3.6.1. Implementation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -972,7 +1046,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.6.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1027,12 +1101,12 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="list-feature"><a class="link" href="#list-feature">3.6. List feature</a></h3>
+<h3 id="list-feature"><a class="link" href="#list-feature">3.7. List feature</a></h3>
 <div class="paragraph">
 <p>ListCommand` extends <code>Command</code> that will read in user command and execute the command result. User can filter by <code>Catergory</code> and/or <code>Difficulty</code></p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.1. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.7.1. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-showing-the-filtered-list"><a class="link" href="#aspect-showing-the-filtered-list">Aspect: Showing the filtered list</a></h5>
 <div class="ulist">
@@ -1053,9 +1127,9 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-features"><a class="link" href="#proposed-features">3.7. Proposed Features</a></h3>
+<h3 id="proposed-features"><a class="link" href="#proposed-features">3.8. Proposed Features</a></h3>
 <div class="sect3">
-<h4 id="star-answerable-command"><a class="link" href="#star-answerable-command">3.7.1. Star Answerable Command</a></h4>
+<h4 id="star-answerable-command"><a class="link" href="#star-answerable-command">3.8.1. Star Answerable Command</a></h4>
 <div class="sect4">
 <h5 id="overview-of-feature"><a class="link" href="#overview-of-feature">Overview of feature</a></h5>
 <div class="paragraph">
@@ -1113,7 +1187,7 @@ which is typically used in the configuration mode. It is now being called intern
 </div>
 </div>
 <div class="sect3">
-<h4 id="input-short-code-for-quiz-questions"><a class="link" href="#input-short-code-for-quiz-questions">3.7.2. Input short code for quiz questions</a></h4>
+<h4 id="input-short-code-for-quiz-questions"><a class="link" href="#input-short-code-for-quiz-questions">3.8.2. Input short code for quiz questions</a></h4>
 <div class="sect4">
 <h5 id="overview-of-feature-2"><a class="link" href="#overview-of-feature-2">Overview of feature</a></h5>
 <div class="paragraph">
@@ -1130,7 +1204,7 @@ The activity diagram is outlined below.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
 <div class="paragraph">
 <div class="title">Activity diagram showing the user flow for code input during quiz mode.</div>
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
@@ -1138,7 +1212,7 @@ The activity diagram is outlined below.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1169,7 +1243,7 @@ The activity diagram is outlined below.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1942,4 +2016,4 @@ Expected: Start quiz window will pop up similar to previous test case. The diffe
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:43:25 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 16:19:05 UTC</div></div></div></body></html>
