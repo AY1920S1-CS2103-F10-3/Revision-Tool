@@ -24,8 +24,11 @@
 <ul class="sectlevel2">
 <li><a href="#add-questions-feature">3.1. Add questions feature</a></li>
 <li><a href="#Implementation-ConfigQuiz">3.2. Configuration and Quiz Mode</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#quiz-mode">3.3. Quiz Mode</a></li>
+<li><a href="#restore-feature">3.4. Restore feature</a></li>
+<li><a href="#autocomplete-feature">3.5. AutoComplete feature</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -36,12 +39,13 @@
 <li><a href="#use-cases">Appendix C: Use Cases</a></li>
 <li><a href="#non-functional-requirements">Appendix D: Non Functional Requirements</a></li>
 <li><a href="#glossary">Appendix E: Glossary</a></li>
-<li><a href="#product-survey">Appendix F: Product Survey</a></li>
-<li><a href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a>
+<li><a href="#instructions-for-manual-testing">Appendix F: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
-<li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-an-answerable">G.2. Deleting an answerable</a></li>
-<li><a href="#saving-data">G.3. Saving data</a></li>
+<li><a href="#launch-and-shutdown">F.1. Launch and Shutdown</a></li>
+<li><a href="#adding-an-answerable">F.2. Adding an answerable</a></li>
+<li><a href="#deleting-an-answerable">F.3. Deleting an answerable</a></li>
+<li><a href="#starting-quiz">F.4. Starting quiz</a></li>
+<li><a href="#saving-data">F.5. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -198,7 +202,7 @@ The following class plays an important role at the architecture level:</p>
 <h4 id="overview-of-logic-component"><a class="link" href="#overview-of-logic-component">2.3.1. Overview of Logic Component</a></h4>
 <div id="fig-LogicClassDiagram" class="imageblock">
 <div class="content">
-<img src="images/LogicClassDiagram.png" alt="LogicClassDiagram">
+<img src="images/LogicClassDiagram2.png" alt="LogicClassDiagram2">
 </div>
 <div class="title">Figure 5. Structure of the Logic Component</div>
 </div>
@@ -335,10 +339,8 @@ can be found in <a href="#Implementation-ConfigQuiz">Section 3.2, &#8220;Configu
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>]
-==== The <code>Answerable</code> Class</p>
-</div>
+<div class="sect3">
+<h4 id="the-code-answerable-code-class"><a class="link" href="#the-code-answerable-code-class">2.4.1. The <code>Answerable</code> Class</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/AnswerableClassDiagram.png" alt="AnswerableClassDiagram">
@@ -384,6 +386,7 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 </div>
 </li>
 </ul>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -437,15 +440,18 @@ Additionally, it implements the following operations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>AddCommand#addMcq()</code>&#8201;&#8212;&#8201;Adds a mcq question to the test bank.</p>
+<p><code>AddCommand#addMcq()</code>&#8201;&#8212;&#8201;Adds a mcq question to the question bank.</p>
 </li>
 <li>
-<p><code>AddCommand#addShortAns()</code>&#8201;&#8212;&#8201;Adds a short answer question to the test bank.</p>
+<p><code>AddCommand#addShortAns()</code>&#8201;&#8212;&#8201;Adds a short answer question to the question bank.</p>
+</li>
+<li>
+<p><code>AddCommand#addTf()</code>&#8201;&#8212;&#8201;Adds a True False answer question to the question bank.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These operations are exposed in the <code>Model</code> interface as <code>Model#addMcqCommand()</code> and <code>Model#addShortAnsCommand()</code> respectively.</p>
+<p>These operations are exposed in the <code>Model</code> interface as <code>Model#addMcqCommand()</code>, <code>Model#addTfCommand()</code> and <code>Model#addShortAnsCommand()</code> respectively.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the add questions mechanism behaves at each step.</p>
@@ -494,17 +500,16 @@ If a command fails its execution, it will not save the question into the <code>r
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Read and parse the command to execute it</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Easy to implement.</p>
+<p>User enters the command "add &#8230;&#8203;".</p>
 </li>
 <li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
+<p>Command is taken in and parsed to validate if it is a valid command.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Add command is executed.</p>
+</li>
+<li>
+<p>New question is saved in the question bank.</p>
 </li>
 </ul>
 </div>
@@ -514,30 +519,26 @@ If a command fails its execution, it will not save the question into the <code>r
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use a single line containing all the information of the question.</p>
-<div class="ulist">
-<ul>
+<p>Use a single line containing all the information of the question.</p>
+</li>
 <li>
 <p>Pros: Faster for user to add a question.</p>
 </li>
 <li>
 <p>Cons: Hard for user to memorize the long sequence which may cause invalid command input.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Other alternative we considered:</strong> Use multiple steps to guide user on adding the question.</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p><strong>Alternative 2:</strong> Use multiple steps to guide user on adding the question.</p>
-<div class="ulist">
-<ul>
 <li>
 <p>Pros: User do not have to memorize the correct format and less chance for an invalid command input.</p>
 </li>
 <li>
 <p>Cons: Slow to add questions, requiring multiple steps to fully complete a question.</p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
@@ -700,8 +701,11 @@ CommandResult c = new CommandResultBuilder().isCorrect(true).build();</pre>
 </div>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="quiz-mode"><a class="link" href="#quiz-mode">3.3. Quiz Mode</a></h3>
 <div class="sect3">
-<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">3.2.6. How the quiz works</a></h4>
+<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">3.3.1. How the quiz works</a></h4>
 <div class="paragraph">
 <p>After the user has <code>start</code> ed the quiz, the application enters Quiz Mode. The following is the flow of events after a quiz
 session has started.</p>
@@ -754,14 +758,149 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="restore-feature"><a class="link" href="#restore-feature">3.4. Restore feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">3.4.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The restore mechanism is facilitated by <code>RestoreCommand</code>.
+It extends <code>Command</code> that will read a user command and execute the command result.
+Additionally, it implements the following operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>#handleRestore()</code>&#8201;&#8212;&#8201;Prompts the user with an alert box if he really wishes to execute the restore function.</p>
+</li>
+<li>
+<p><code>#setRevisionTool()</code>&#8201;&#8212;&#8201;Clears the current question bank and reset it with our own default questions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These operations are exposed in the <code>Model</code> interface as <code>Model#setRevisionTool()</code> and from <code>MainWindow</code> as <code>#handleRestore()</code> respectively.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.2. Design Considerations</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>When implementing the restore feature, we didn&#8217;t want users to face a problem if they entered the command accidentally hence the alert popup was implemented, to prompt users if they really want to carry out the command before executing it.</p>
+</li>
+<li>
+<p>With this popup, users will now be more cautious when trying to restore and only do so when they really want to reset their revision tool.</p>
+</li>
+<li>
+<p>Furthermore, the questions that we included in the default revision tool question bank are questions taken from the lecture quiz and weekly quiz which are most probably deemed important by the professor himself.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="aspect-how-restore-executes"><a class="link" href="#aspect-how-restore-executes">Aspect: How Restore executes</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>User enters the command "restore".</p>
+</li>
+<li>
+<p>Command is taken in and a popup is shown to reconfirm if the user would like to carry out the restore command.</p>
+</li>
+<li>
+<p>Upon clicking yes, restore command will be handled.</p>
+</li>
+<li>
+<p>Current questions will be deleted and default questions will reset to the revision tool.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.5. AutoComplete feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A set of commands and auto completed text are saved in a set.</p>
+</li>
+<li>
+<p>When users type a command on the text box, method <code>#populatePopup</code> will be called where the user&#8217;s command will be matched against our SortedSet.</p>
+</li>
+<li>
+<p>If there is a match, a contextMenu showing all possible auto complete text will show up.</p>
+</li>
+<li>
+<p>This method is implemented such that the results in the contextMenu will change and show as the user is typing and this would make it more intuitive for users.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.2. Design Considerations</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The main design consideration here would be to have value added auto complete list to pop up.</p>
+</li>
+<li>
+<p>How we managed that is to show:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The basic command</p>
+</li>
+<li>
+<p>Basic command + possible parse commands where they can easily fill in.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AutoComplete2.png" alt="AutoComplete2">
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-how-autocomplete-works"><a class="link" href="#aspect-how-autocomplete-works">Aspect: How AutoComplete works</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Users wishes to enter an "Add" command <code>add type/mcq q/What is 1 + 1 y/2 x/1 x/3 x/4 cat/easy diff/1</code></p>
+</li>
+<li>
+<p>Upon typing either "a", "ad" or even "add", the auto complete context menu will pop up showing possible auto complete list, mainly:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>add</p>
+</li>
+<li>
+<p>add type/ q/ y/ x/ cat/ diff/</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Upon seeing that, users will be able to select those options or use those as a guideline to complete his commands more intuitively.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -792,7 +931,7 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1119,18 +1258,21 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>11</code> or above installed.</p>
+<p>RevisionTool should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>11</code> or above installed.</p>
 </li>
 <li>
-<p>Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.</p>
+<p>RevisionTool be able to hold up to 1000 questions without any significant reduction in performance for typical usage.</p>
 </li>
 <li>
-<p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
+<p>A user with above slow typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
+</li>
+<li>
+<p>RevisionTool should be able to run without any internet connectivity.</p>
+</li>
+<li>
+<p>RevisionTool does not require any further installation upon downloading the jar file.</p>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
 </div>
 </div>
 </div>
@@ -1143,53 +1285,38 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 <dd>
 <p>Windows, Linux, Unix, OS-X</p>
 </dd>
-<dt class="hdlist1"><a id="private-contact-detail"></a> Private contact detail</dt>
+<dt class="hdlist1"><a id="Answerables"></a> Answerables</dt>
 <dd>
-<p>A contact detail that is not meant to be shared with others</p>
+<p>A set of question answers, which includes :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Type: MCQ, True False, Short Answered Question</p>
+</li>
+<li>
+<p>Question</p>
+</li>
+<li>
+<p>Correct Answers (Can contain multiple answers)</p>
+</li>
+<li>
+<p>Wrong Answers (Can contain multiple answers)</p>
+</li>
+<li>
+<p>Category</p>
+</li>
+<li>
+<p>Difficulty</p>
+</li>
+</ul>
+</div>
 </dd>
 </dl>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="product-survey"><a class="link" href="#product-survey">Appendix F: Product Survey</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Product Name</strong></p>
-</div>
-<div class="paragraph">
-<p>Author: &#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>Pros:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Cons:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix G: Instructions for Manual Testing</a></h2>
+<h2 id="instructions-for-manual-testing"><a class="link" href="#instructions-for-manual-testing">Appendix F: Instructions for Manual Testing</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Given below are instructions to test the app manually.</p>
@@ -1207,7 +1334,7 @@ These instructions only provide a starting point for testers to work on; testers
 </table>
 </div>
 <div class="sect2">
-<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">G.1. Launch and Shutdown</a></h3>
+<h3 id="launch-and-shutdown"><a class="link" href="#launch-and-shutdown">F.1. Launch and Shutdown</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1229,10 +1356,10 @@ Expected: Shows the GUI with a set of sample answerables. The window size may no
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Resize the window to an optimum size. Move the window to a different location. Close the window.</p>
+<p>Resize the window to an optimum size. Move the window to a different location. Close the window by using the <code>x</code> button at the top right hand corner or by using the command <code>exit</code>.</p>
 </li>
 <li>
-<p>Re-launch the app by double-clicking the jar file.<br>
+<p>Re-launch the app by double clicking the jar file.<br>
 Expected: The most recent window size and location is retained.</p>
 </li>
 </ol>
@@ -1240,12 +1367,60 @@ Expected: The most recent window size and location is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="adding-an-answerable"><a class="link" href="#adding-an-answerable">F.2. Adding an answerable</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adding a MCQ to the current list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>add type/mcq q/What is 1 + 1 y/2 x/1 x/3 x/4 cat/easy diff/1</code><br>
+Expected: new MCQ answerable will be created and appended at the bottom of the list. Details of the the added answerable will be shown at the bottom of the list, and the correct answer will be highlighted in green.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Adding a True False to the current list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>add type/tf q/What is 1 + 1 = 2 y/true cat/easy diff/1</code><br>
+Expected: new True False answerable will be created and appended at the bottom of the list. Details of the added answerable will be shown at the bottom of the list, and only the correct answer will be shown and highlighted in green.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Adding a Short Answer Question (SAQ) to the current list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>add type/saq q/What is smaller than 10 but bigger than 7? y/8 y/9 cat/easy diff/1</code><br>
+Expected: new SAQ answerable will be created and appended at the bottom of the list. Details of the added answerable will be shown at the bottom of the list and all the correct answers state will be highlighted in green.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Adding an Answerable that already exist in the Revision Tool</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>add type/mcq q/What is 1 + 1 y/2 x/1 x/3 x/4 cat/easy diff/1</code><br>
+Expected: No new answerable will be added as the question already exist in the Revision Tool. An error message will be thrown, informing users that the answerable already exist in the Revision Tool.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-an-answerable"><a class="link" href="#deleting-an-answerable">G.2. Deleting an answerable</a></h3>
+<h3 id="deleting-an-answerable"><a class="link" href="#deleting-an-answerable">F.3. Deleting an answerable</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1272,12 +1447,35 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="starting-quiz"><a class="link" href="#starting-quiz">F.4. Starting quiz</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Starting a quiz</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>start mode/normal</code><br>
+Expected: Start quiz window will pop up with a question showing under the command box and the answers in the result box further below. Answer the questions using the CLI accordingly to see the progress bar move till quiz completion. Users will be prompted if he wishes to proceed to level 2.</p>
+</li>
+<li>
+<p>Test case: <code>start mode/arcade</code><br>
+Expected: Start quiz window will pop up similar to previous test case. The only difference would be that once the quiz proceeds and an incorrect answer is input, the quiz ends and the score will be shown. This is the "hard mode" of our quiz mode.</p>
+</li>
+<li>
+<p>Test case <code>start mode/custom timer/3</code><br>
+Expected: Start quiz window will pop up similar to previous test case. The difference here will be the timer. Instead of the 30 seconds timer per question, the new timer (seen at the bottom right beside the status progress bar) will be at 3 seconds as set by the user.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">G.3. Saving data</a></h3>
+<h3 id="saving-data"><a class="link" href="#saving-data">F.5. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1285,16 +1483,29 @@ Expected: Similar to previous.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
+<p>If there is a missing answerables data file, the RevisionTool will automatically create a default data file with all the default answerables inside.</p>
+</li>
+<li>
+<p>If there is a corrupted answerable data file, the RevisionTool will automatically start with a list of empty file. Users will then be able to use the <code>#restoreCommand</code> here to get a list of default answerables or alternatively, create a new set of answerables manually.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>To identify missing/corrupted data files:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>.\data\revisiontool.json</code></p>
+</li>
+<li>
+<p><code>.\data\history.json</code></p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
 </div>
 </div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 11:56:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:02:56 UTC</div></div></div></body></html>
