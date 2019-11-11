@@ -139,19 +139,37 @@ public class StartQuizWindowTest {
      */
     @Test
     public void typeValidAnswer_endOfQuizReached_shouldShowEndAlert(FxRobot robot) {
-        robot.clickOn(".commandTextField");
-        robot.write(ANSWER_VALID_MCQ);
-        robot.type(KeyCode.ENTER);
-        robot.type(KeyCode.ENTER); //Go to next level
-        robot.write(ANSWER_VALID_TRUEFALSE);
-        robot.type(KeyCode.ENTER);
-        robot.type(KeyCode.ENTER); //Go to next level
-        robot.write(ANSWER_VALID_SAQ);
-        robot.type(KeyCode.ENTER);
+        goToEndOfQuiz(robot);
         assertEquals("Level 3", startQuizWindow.getLevelLabel().getLevelLabel().getText());
         int numberOfAlerts = getNumberOfWindowsShown(robot, AlertDialog.END_QUIZ_TITLE);
         assertEquals(1, numberOfAlerts);
         robot.type(KeyCode.ENTER);
+    }
+
+    /**
+     * Tests whether the quiz window is dismissed and MainWindow is displayed when user ends the level.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
+    @Test
+    public void reachEndOfLevel_typeEscape_shouldReturnToMainWindow(FxRobot robot) {
+        robot.clickOn(".commandTextField");
+        robot.write(ANSWER_VALID_MCQ);
+        robot.type(KeyCode.ENTER);
+        robot.type(KeyCode.ESCAPE);
+        int numberOfAlerts = getNumberOfWindowsShown(robot, "CS2103 Revision Tool");
+        assertEquals(1, numberOfAlerts);
+    }
+
+    /**
+     * Tests whether the quiz window is dismissed and MainWindow is displayed when user ends the quiz.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
+    @Test
+    public void reachEndOfQuiz_typeEscape_shouldReturnToMainWindow(FxRobot robot) {
+        goToEndOfQuiz(robot);
+        robot.type(KeyCode.ESCAPE);
+        int numberOfAlerts = getNumberOfWindowsShown(robot, "CS2103 Revision Tool");
+        assertEquals(1, numberOfAlerts);
     }
 
     /**
@@ -173,6 +191,22 @@ public class StartQuizWindowTest {
         return (int) fxRobot.listTargetWindows().stream()
                 .filter(window -> window instanceof Stage && ((Stage) window).getTitle().equals(stageTitle))
                 .count();
+    }
+
+    /**
+     * Instructs the robot to perform actions that will go to the end of the quiz.
+     * @param robot robot used to simulate user actions. Will be injected by the test runner.
+     */
+    private void goToEndOfQuiz(FxRobot robot) {
+        robot.clickOn(".commandTextField");
+        robot.write(ANSWER_VALID_MCQ);
+        robot.type(KeyCode.ENTER);
+        robot.type(KeyCode.ENTER); //Go to next level
+        robot.write(ANSWER_VALID_TRUEFALSE);
+        robot.type(KeyCode.ENTER);
+        robot.type(KeyCode.ENTER); //Go to next level
+        robot.write(ANSWER_VALID_SAQ);
+        robot.type(KeyCode.ENTER);
     }
 
 }

@@ -1,10 +1,11 @@
 package seedu.revision.storage;
 
-import org.junit.jupiter.api.Test;
-import seedu.revision.model.category.Category;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.revision.testutil.Assert.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.revision.model.category.Category;
 
 /**
  * @@author khiangleon
