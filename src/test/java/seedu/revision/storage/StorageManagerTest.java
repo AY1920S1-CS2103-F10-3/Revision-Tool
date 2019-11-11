@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.revision.testutil.TypicalMcqs.getTypicalMcqs;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,10 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.revision.commons.core.GuiSettings;
+import seedu.revision.model.History;
 import seedu.revision.model.ReadOnlyRevisionTool;
 import seedu.revision.model.RevisionTool;
 import seedu.revision.model.UserPrefs;
 
+/**
+ * @@ author khiangleon
+ */
 public class StorageManagerTest {
 
     @TempDir
@@ -64,6 +69,13 @@ public class StorageManagerTest {
     @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getRevisionToolFilePath());
+    }
+
+
+    @Test
+    public void test1() throws IOException {
+        History h = new History();
+        storageManager.saveHistory(h);
     }
 
 }

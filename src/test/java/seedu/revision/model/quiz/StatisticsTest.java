@@ -1,13 +1,20 @@
 package seedu.revision.model.quiz;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.revision.testutil.Assert.assertThrows;
-
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static seedu.revision.testutil.Assert.assertThrows;
+
+/**
+ * @@author khiangleon
+ */
 public class StatisticsTest {
+
+    private static final Statistics s = new Statistics();
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -36,6 +43,33 @@ public class StatisticsTest {
 
         // valid statistics
         assertTrue(Statistics.isValidStatistics("25/25,10/10,8/8,7/7"));
+    }
+
+    @Test
+    public void testGetPriority() {
+        s.getPriority();
+    }
+
+    @Test
+    public void testToString() {
+        assertNotEquals("false string", s.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        assertFalse(s.equals("false object"));
+    }
+
+    @Test
+    public void testHashCode() {
+        assertNotNull(s.hashCode());
+    }
+
+    @Test
+    public void testGetResults() {
+        assertNotEquals(1, s.getResult());
+        assertNotEquals(1, s.getResult2());
+        assertNotEquals(1, s.getResult3());
     }
 }
 

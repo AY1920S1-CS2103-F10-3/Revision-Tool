@@ -16,6 +16,5 @@ public class JsonSerializableHistoryTest {
         assertThrows(NullPointerException.class, () -> new JsonSerializableHistory(new History(null)));
     }
 
-
 }
 
