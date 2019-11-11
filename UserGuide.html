@@ -37,8 +37,9 @@
 <li><a href="#custom-mode">4.3. Custom Mode</a></li>
 <li><a href="#answering-questions">4.4. Answering Questions</a></li>
 <li><a href="#exiting-the-quiz">4.5. Exiting the quiz</a></li>
-<li><a href="#hints-code-coming-in-v2-0-code">4.6. Hints <code>[coming in v2.0]</code></a></li>
-<li><a href="#pictures-diagrams-code-coming-in-v2-0-code">4.7. Pictures/Diagrams <code>[coming in v2.0]</code></a></li>
+<li><a href="#mark-question-as-starred-during-quiz-code-coming-in-v2-0-code">4.6. Mark question as starred during quiz <code>[coming in v2.0]</code></a></li>
+<li><a href="#enter-short-code-during-quiz-sessions-coming-in-v2-0">4.7. Enter short code during quiz sessions`[coming in v2.0]`</a></li>
+<li><a href="#pictures-diagrams-code-coming-in-v2-0-code">4.8. Pictures/Diagrams <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -92,7 +93,7 @@ bugs related to displaying pop ups. more info about this bug can be found at thi
 <div class="ulist">
 <ul>
 <li>
-<p><strong><code>list</code></strong> : lists all categories and difficulties for the user to choose.</p>
+<p><strong><code>list</code></strong> : lists questions of all categories and difficulties for the user to view.</p>
 </li>
 <li>
 <p><strong><code>add `</strong>`type/mcq q/According to the textbook, which kind of project is more difficult? x/Greenfield x/Brownfield y/None
@@ -112,7 +113,7 @@ y/ (as in "yes") marking the correct answers. Difficulty: 1, Category: Introduct
 <p>Refer to <a href="#ConfigurationMode">Section 3, &#8220;Configuration Mode&#8221;</a> for details of each command.</p>
 </li>
 <li>
-<p>To enter Quiz Mode, type <code>start mode/normal</code> other modes such as arcade and custom are also available and are elaborated
+<p>To enter Quiz Mode, type <code>start mode/normal</code> other modes such as arcade and custom are also available and are elaborated on
 in <a href="#quiz-mode">Section 4, &#8220;Quiz Mode&#8221;</a> .</p>
 <div class="imageblock">
 <div class="content">
@@ -187,7 +188,7 @@ start mode/normal
 <p><code>start mode/normal</code></p>
 </li>
 <li>
-<p><code>start mode/custom cat/uml /diff/1 timer/20</code></p>
+<p><code>start mode/custom cat/uml diff/1 timer/20</code></p>
 </li>
 </ul>
 </div>
@@ -379,6 +380,9 @@ The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p
 <p>When editing category and/or difficulty, the existing category and/or difficulty of the question will be removed
 i.e adding of category and/or difficulty is not cumulative.</p>
 </li>
+<li>
+<p>Question type cannot be edited.</p>
+</li>
 </ul>
 </div>
 </div>
@@ -439,8 +443,8 @@ Deletes the 1st, 3rd and 5th question in the question bank list.</p>
 <div class="sect2">
 <h3 id="listing-all-questions-code-list-code"><a class="link" href="#listing-all-questions-code-list-code">3.9. Listing all questions : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all questions in the test back. If appended with a category and/or difficulty, <code><strong>Insert name</strong></code> will show all questions
-of the chosen category and/or difficulty</p>
+<p>Shows a list of all questions in the test back. If appended with a category and/or difficulty, <code>list</code> will show all questions
+matching the chosen category and/or difficulty.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>list [cat/CATEGORY] [diff/DIFFICULTY]</code></p>
@@ -466,7 +470,7 @@ If no category or difficulty is stated (i.e. <code>list</code>), program will li
 <p><code>list cat/requirements</code></p>
 </li>
 <li>
-<p><code>list cat/requiments diff/2</code></p>
+<p><code>list cat/requirements diff/2</code></p>
 </li>
 </ul>
 </div>
@@ -488,7 +492,7 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <p>The order of the keywords does not matter. e.g. <code>green field</code> will match <code>field green</code></p>
 </li>
 <li>
-<p>Only the name is searched.</p>
+<p>Only the question name is searched.</p>
 </li>
 <li>
 <p>Only full words will be matched e.g. <code>Requirement</code> will not match <code>Requirements</code></p>
@@ -534,7 +538,7 @@ Format: <code>restore</code></p>
 <div class="sect2">
 <h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.13. Saving the data</a></h3>
 <div class="paragraph">
-<p>question bank data are saved in the hard disk automatically after any command that changes the data.
+<p>Question bank data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
@@ -556,6 +560,10 @@ Format: <code>exit</code></p>
 <div class="sect1">
 <h2 id="quiz-mode"><a class="link" href="#quiz-mode">4. Quiz Mode</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>For all quiz modes, the current question will be skipped when the timer reaches zero. The question will be marked as wrong,
+and the next question will be shown with the updated timer.</p>
+</div>
 <div class="sect2">
 <h3 id="normal-mode"><a class="link" href="#normal-mode">4.1. Normal Mode</a></h3>
 <div class="paragraph">
@@ -584,8 +592,10 @@ level 3 giving the user 20 seconds to answer each question.</p>
 <div class="sect2">
 <h3 id="custom-mode"><a class="link" href="#custom-mode">4.3. Custom Mode</a></h3>
 <div class="paragraph">
-<p>Category, Difficulty and Timer (must be above 1 second) can be customised by the user. Levels are also sorted according to
-difficulty.</p>
+<p>Category, Difficulty and Timer (must be above 1 second) can be customised by the user. Decimal values will be truncated, i.e.
+<code>start mode/custom timer/5.34</code> will start the quiz with a time limit of 5 seconds for each question.
+Levels are also sorted according to
+difficulty. The prefixes are optional, and if no prefixes are provided, custom mode will begin a quiz with normal mode settings.</p>
 </div>
 </div>
 <div class="sect2">
@@ -621,15 +631,20 @@ difficulty.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="hints-code-coming-in-v2-0-code"><a class="link" href="#hints-code-coming-in-v2-0-code">4.6. Hints <code>[coming in v2.0]</code></a></h3>
+<h3 id="mark-question-as-starred-during-quiz-code-coming-in-v2-0-code"><a class="link" href="#mark-question-as-starred-during-quiz-code-coming-in-v2-0-code">4.6. Mark question as starred during quiz <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
-<p>User will be able to get hints for MCQs and SAQs. Typing '/hint' for MCQs will eliminate two wrong answers from the
-options, leaving user with two options, one of which is correct. Typing '/hint' for SAQs will show the user random
-keywords from the correct answer list.</p>
+<p>User will be able to star questions during the quiz by entering <code>star</code> for the current question they are on. The question will be updated as "starred", so that the user will remember that they
+had problems with that particular question during the quiz.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="pictures-diagrams-code-coming-in-v2-0-code"><a class="link" href="#pictures-diagrams-code-coming-in-v2-0-code">4.7. Pictures/Diagrams <code>[coming in v2.0]</code></a></h3>
+<h3 id="enter-short-code-during-quiz-sessions-coming-in-v2-0"><a class="link" href="#enter-short-code-during-quiz-sessions-coming-in-v2-0">4.7. Enter short code during quiz sessions`[coming in v2.0]`</a></h3>
+<div class="paragraph">
+<p>User will be able to type in code during the quiz, and the app will provide a syntax checker which will not allow the user to submit his code if there are syntax errors.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pictures-diagrams-code-coming-in-v2-0-code"><a class="link" href="#pictures-diagrams-code-coming-in-v2-0-code">4.8. Pictures/Diagrams <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p>User will be able to upload pictures and diagrams as part of the questions when adding questions to the test bank.</p>
 </div>
@@ -721,4 +736,4 @@ arrow keys and hit <kbd>Enter</kbd> to complete the command.
 </table>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:01:41 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:43:25 UTC</div></div></div></body></html>

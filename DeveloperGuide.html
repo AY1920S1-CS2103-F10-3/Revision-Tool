@@ -22,13 +22,15 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#add-questions-feature">3.1. Add questions feature</a></li>
+<li><a href="#add-code-answerable-code-feature">3.1. Add <code>Answerable</code> feature</a></li>
 <li><a href="#Implementation-ConfigQuiz">3.2. Configuration and Quiz Mode</a></li>
 <li><a href="#saq-feature">3.3. Saq feature</a></li>
 <li><a href="#restore-feature">3.4. Restore feature</a></li>
 <li><a href="#autocomplete-feature">3.5. AutoComplete feature</a></li>
-<li><a href="#logging">3.6. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
+<li><a href="#list-feature">3.6. List feature</a></li>
+<li><a href="#proposed-features">3.7. Proposed Features</a></li>
+<li><a href="#logging">3.8. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -177,23 +179,99 @@ The following class plays an important role at the architecture level:</p>
 <p><strong>API</strong> : <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The abstract class <code>ParentWindow</code> consists of individual Ui parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>AnswerableListPanel</code>, <code>StatusBarFooter</code> etc. All Ui classes inherit from the abstract <code>UiPart</code> class.
+The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/AY1920S1-CS2103-F10-3/main/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
-</div>
-<div class="paragraph">
-<p>The <code>UI</code> component,</p>
+<p>The <code>MainWindow</code> inherits from the <code>ParentWindow</code> class and handles the display of information in the configuration mode. Key responsibilities of the <code>MainWindow</code> include</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Executes user commands using the <code>Logic</code> component.</p>
+<p>Execute user commands through the <code>CommandBox</code> using the <code>Logic</code> component.</p>
 </li>
 <li>
-<p>Listens for changes to <code>Model</code> data so that the UI can be updated with the modified data.</p>
+<p>Listen for changes to <code>Model</code> data so that the UI can be updated to reflect the modified data. This occurs for two types of situations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Direct modification to the information inside the Answerables List, such as <code>AddCommand</code> or <code>EditCommand</code></p>
+</li>
+<li>
+<p>Filtering of the currently shown list, for commands such as <code>FindCommand</code> and <code>ListCommand</code></p>
 </li>
 </ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>StartQuizWindow</code> inherits from the <code>ParentWindow</code> class and handles the display of information during quiz mode. It has an additional <code>ScoreProgressAndTimerGridPane</code> Ui component, which
+is used to contain score progress and timer related Ui. Key responsibilities of the <code>StartQuizWindow</code> include</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Execute user answer input, e.g. "A", "B", "C", "D" for <code>Mcq</code></p>
+</li>
+<li>
+<p>Adapt to changes in the current <code>Answerable</code> and update the Ui accordingly based on a few typical situations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>from the four options of <code>Mcq</code> to the two options for <code>TrueFalse</code></p>
+</li>
+<li>
+<p>update the progress bar for every <code>Answerable</code></p>
+</li>
+<li>
+<p>update the timer every second and switch to the next <code>Answerable</code> when countdown reaches 0.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">2.2.1. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-implementation-of-the-ui-for-both-windows"><a class="link" href="#aspect-implementation-of-the-ui-for-both-windows">Aspect: Implementation of the Ui for both windows</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Have a parent class <code>ParentWindow</code> which is extended by <code>MainWindow</code> and <code>StartQuizWindow</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pro1: Adheres to the Single Responsibility Principle, where the <code>MainWindow</code> only has one reason to change, and changes in quiz mode should not affect the <code>MainWindow</code></p>
+</li>
+<li>
+<p>Pro2: The abstract <code>ParentWindow</code> class follows the Open/Closed Principle, where the <code>StartQuizWindow</code> extends upon the Ui components and adds it&#8217;s own Timer and ProgressBar Ui component.
+Each class is also able to have their own implementation of the <code>executeCommand(String commandText)</code> method.</p>
+</li>
+<li>
+<p>Con: Dependency between <code>MainWindow</code> and <code>StartQuizWindow</code> classes in the methods <code>MainWindow#handleStart</code> and <code>StartQuizWindow#handleEnd</code> respectively</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 (initial choice):</strong> Handle all user commands and changes in Ui within the MainWindow.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pro: Less overall code, quiz mode only needs to edit the content in the <code>AnswerableListPanel</code>.</p>
+</li>
+<li>
+<p>Con: As the CommandBox is a functional interface, it can only take in one abstract method as a parameter. This would mean that <code>MainWindow#executeCommand</code> would need to handle all cases of
+user inputs, for both answerable input commands and configuration mode commands. The <code>MainWindow#executeCommand</code> would be very long with complicated logic, thus violating SLAP.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -219,7 +297,7 @@ The following class plays an important role at the architecture level:</p>
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
 </li>
 <li>
-<p>The command execution can affect the <code>Model</code> (e.g. adding a question).</p>
+<p>The command execution can affect the <code>Model</code> (e.g. adding an <code>Answerable</code>).</p>
 </li>
 <li>
 <p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
@@ -326,10 +404,10 @@ can be found in <a href="#Implementation-ConfigQuiz">Section 3.2, &#8220;Configu
 <div class="ulist">
 <ul>
 <li>
-<p>stores a <code>QuestionBank</code> object that represents the Question Bank.</p>
+<p>stores a <code>QuestionBank</code> object that represents the <code>QuestionBank</code>.</p>
 </li>
 <li>
-<p>stores the Question Bank data.</p>
+<p>stores the <code>Question Bank</code> data.</p>
 </li>
 <li>
 <p>exposes an unmodifiable <code>ObservableList&lt;Answerable&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
@@ -351,7 +429,7 @@ can be found in <a href="#Implementation-ConfigQuiz">Section 3.2, &#8220;Configu
 <p>The main class that the Revision Tool operates on is the <code>Answerable</code> class.</p>
 </div>
 <div class="paragraph">
-<p>Each <code>Answerable</code> class must have 1 <code>Question</code>, 1 <code>Difficulty</code> and can have any amount of categories associated with it.
+<p>Each <code>Answerable</code> class must have 1 <code>Answerable</code>, 1 <code>Difficulty</code> and can have any amount of categories associated with it.
 The amount of answers that an <code>Answerable</code> can have depends on its type.</p>
 </div>
 <div class="paragraph">
@@ -429,11 +507,11 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="add-questions-feature"><a class="link" href="#add-questions-feature">3.1. Add questions feature</a></h3>
+<h3 id="add-code-answerable-code-feature"><a class="link" href="#add-code-answerable-code-feature">3.1. Add <code>Answerable</code> feature</a></h3>
 <div class="sect3">
 <h4 id="implementation-2"><a class="link" href="#implementation-2">3.1.1. Implementation</a></h4>
 <div class="paragraph">
-<p>The add questions mechanism is facilitated by <code>AddCommand</code>.
+<p>The add <code>Answerable`s mechanism is facilitated by `AddCommand</code>.
 It extends <code>Command</code> that will read a user command and execute the command result.
 Additionally, it implements the following operations:</p>
 </div>
@@ -454,10 +532,10 @@ Additionally, it implements the following operations:</p>
 <p>These operations are exposed in the <code>Model</code> interface as <code>Model#addMcqCommand()</code>, <code>Model#addTfCommand()</code> and <code>Model#addShortAnsCommand()</code> respectively.</p>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the add questions mechanism behaves at each step.</p>
+<p>Given below is an example usage scenario and how the add `Answerable`s mechanism behaves at each step.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user types <code>add type/mcq q/"string of question" x/option1 x/option2 y/option3 x/option4 cat/[UML] diff/[easy]</code>, this command adds a easy difficulty mcq question about UML with 4 options and option3 being the correct answer.</p>
+<p>Step 1. The user types <code>add type/mcq q/"string of `Answerable`" x/option1 x/option2 y/option3 x/option4 cat/[UML] diff/[easy]</code>, this command adds a easy difficulty mcq <code>Answerable</code> about UML with 4 options and option3 being the correct answer.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -473,7 +551,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Step 3. The AddCommand object will call its <code>addMcq()</code> method, this method will read the command and store the question with the answers into the <code>test bank</code> accordingly.</p>
+<p>Step 3. The AddCommand object will call its <code>addMcq()</code> method, this method will read the command and store the <code>Answerable</code> with the answers into the <code>test bank</code> accordingly.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -487,14 +565,14 @@ Additionally, it implements the following operations:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not save the question into the <code>revision tool</code>. It will however throw an invalid command exception.
+If a command fails its execution, it will not save the <code>Answerable</code> into the <code>revision tool</code>. It will however throw an invalid command exception.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.1.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-add-executes"><a class="link" href="#aspect-how-add-executes">Aspect: How add executes</a></h5>
 <div class="ulist">
@@ -538,7 +616,7 @@ If a command fails its execution, it will not save the question into the <code>r
 <p>Pros: User do not have to memorize the correct format and less chance for an invalid command input.</p>
 </li>
 <li>
-<p>Cons: Slow to add questions, requiring multiple steps to fully complete a question.</p>
+<p>Cons: Slow to add <code>Answerable`s, requiring multiple steps to fully complete an `Answerable</code>.</p>
 </li>
 </ul>
 </div>
@@ -553,7 +631,7 @@ the state of the application. To implement this, we had to examine two main desi
 determine which parser to use</strong>. We will discuss these considerations in the following segment.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.1. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.2.1. Design Considerations</a></h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 25%;">
@@ -727,8 +805,8 @@ session has started.</p>
 the commands accepted.</p>
 </li>
 <li>
-<p>If the time limit is exceeded (e.g. 30 seconds in Normal Mode), the revision tool will mark the question as wrong and
-move on to the next question.</p>
+<p>If the time limit is exceeded (e.g. 30 seconds in Normal Mode), the revision tool will mark the <code>Answerable</code> as wrong and
+move on to the next <code>Answerable</code>.</p>
 </li>
 <li>
 <p>Once a level has ended, the user will be given the choice to move on to the next level or exit the quiz.</p>
@@ -837,7 +915,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -894,7 +972,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -949,14 +1027,118 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
+<h3 id="list-feature"><a class="link" href="#list-feature">3.6. List feature</a></h3>
 <div class="paragraph">
+<p>ListCommand` extends <code>Command</code> that will read in user command and execute the command result. User can filter by <code>Catergory</code> and/or <code>Difficulty</code></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.1. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-showing-the-filtered-list"><a class="link" href="#aspect-showing-the-filtered-list">Aspect: Showing the filtered list</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current Implementation</strong> <code>ListCommand#excute</code> combines the <code>CategoryPredicate</code> and <code>DifficultyPredicate</code> to update the answerable list through <code>Model#updateFilteredAnswerableList</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pro: Uses Java 8 streams which supports immutability. This is in line with the immutability clause enforced by the <code>ObservableList</code> returned by <code>Model#updateFilteredAnswerableList</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-features"><a class="link" href="#proposed-features">3.7. Proposed Features</a></h3>
+<div class="sect3">
+<h4 id="star-answerable-command"><a class="link" href="#star-answerable-command">3.7.1. Star Answerable Command</a></h4>
+<div class="sect4">
+<h5 id="overview-of-feature"><a class="link" href="#overview-of-feature">Overview of feature</a></h5>
+<div class="paragraph">
+<p>User will be able to star an <code>Answerable</code> during the test, which marks the <code>Answerable</code>
+to remind them to revisit it after the test. The <code>Answerable</code> will have an additional <code>boolean</code> field <code>star</code>.
+The code flow follows the sequence diagram in section 3.2.3, but without the call to <code>Answerable#isCorrect</code>.
+The <code>LogicManager</code> then calls <code>execute(String)</code> in the reference frame "edit question as starred". This will involve the <code>EditCommand</code>
+which is typically used in the configuration mode. It is now being called internally inside the quiz mode to update the <code>Answerable</code> as starred.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/StarQuestionInputSequenceDiagram.png" alt="StarQuestionInputSequenceDiagram">
+</div>
+<div class="title">Figure 16. Sequence Diagram of the StartAnswerableCommand during quiz mode</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditQuestionAsStarredSequenceDiagram.png" alt="EditQuestionAsStarredSequenceDiagram">
+</div>
+<div class="title">Figure 17. Sequence Diagram of editing the <code>Answerable</code> as starred.</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-updating-the-code-answerable-code-to-be-marked-as-starred-while-inside-quiz-mode"><a class="link" href="#aspect-updating-the-code-answerable-code-to-be-marked-as-starred-while-inside-quiz-mode">Aspect: Updating the <code>Answerable</code> to be marked as starred while inside quiz mode.</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Update the <code>Answerable</code> through a call to <code>LogicManager#execute</code>. This is primarily used during the configuration mode and not the quiz mode.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pro: Uses existing commands to implement a new feature for the user, appropriate code reuse</p>
+</li>
+<li>
+<p>Con: No clear separation of logic as quiz mode should not know about configuration mode commands.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Directly edit the <code>Answerable</code> as it is accessible in the <code>execute(String, Answerable)</code> for quiz mode commands.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pro: Less code needed.</p>
+</li>
+<li>
+<p>Con: It breaks the implicit immutability of the <code>Answerable</code>, which should only be edited through the <code>EditCommand</code> (which creates a new <code>Answerable</code>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="input-short-code-for-quiz-questions"><a class="link" href="#input-short-code-for-quiz-questions">3.7.2. Input short code for quiz questions</a></h4>
+<div class="sect4">
+<h5 id="overview-of-feature-2"><a class="link" href="#overview-of-feature-2">Overview of feature</a></h5>
+<div class="paragraph">
+<p>User will be able to input code, during the quiz session, and the <code>RevisionTool</code> will check the syntax as the user types in the code.
+The activity diagram is outlined below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/CodingQuestionSessionActivityDiagram.png" alt="CodingQuestionSessionActivityDiagram">
+</div>
+<div class="title">Figure 18. Sequence Diagram of the StartAnswerableCommand during quiz mode</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<div class="paragraph">
+<div class="title">Activity diagram showing the user flow for code input during quiz mode.</div>
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -987,7 +1169,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1760,4 +1942,4 @@ Expected: Start quiz window will pop up similar to previous test case. The diffe
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:01:41 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:43:25 UTC</div></div></div></body></html>
