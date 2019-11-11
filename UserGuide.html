@@ -17,17 +17,17 @@
 <li><a href="#starting-the-quiz-code-start-code">3.2. Starting the quiz: <code>start</code>.</a></li>
 <li><a href="#check-your-progress-code-status-code-coming-in-v1-4">3.3. Check your progress: <code>status</code> [Coming in v1.4]</a></li>
 <li><a href="#autocomplete-function">3.4. AutoComplete Function</a></li>
-<li><a href="#adding-a-question-code-add-code">3.5. Adding a question: <code>add</code></a></li>
-<li><a href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></li>
-<li><a href="#deleting-a-question-code-delete-code">3.7. Deleting a question : <code>delete</code></a></li>
-<li><a href="#listing-all-questions-code-list-code">3.8. Listing all questions : <code>list</code></a></li>
-<li><a href="#locating-questions-code-find-code">3.9. Locating questions: <code>find</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></li>
-<li><a href="#saving-the-data">3.12. Saving the data</a></li>
-<li><a href="#exiting-the-application-code-exit-code">3.13. Exiting the application: <code>exit</code></a></li>
-<li><a href="#importing-exporting-question-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting question banks <code>[coming in v2.0]</code></a></li>
-<li><a href="#hints-code-coming-in-v2-0-code">3.15. Hints <code>[coming in v2.0]</code></a></li>
+<li><a href="#adding-mcq-truefalse-question-code-add-code">3.5. Adding MCQ/TrueFalse question: <code>add</code></a></li>
+<li><a href="#adding-saq-code-add-code">3.6. Adding SAQ: <code>add</code></a></li>
+<li><a href="#editing-a-question-code-edit-code">3.7. Editing a question : <code>edit</code></a></li>
+<li><a href="#deleting-a-question-code-delete-code">3.8. Deleting a question : <code>delete</code></a></li>
+<li><a href="#listing-all-questions-code-list-code">3.9. Listing all questions : <code>list</code></a></li>
+<li><a href="#locating-questions-code-find-code">3.10. Locating questions: <code>find</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#restoring-all-entries-code-restore-code">3.12. Restoring all entries : <code>restore</code></a></li>
+<li><a href="#saving-the-data">3.13. Saving the data</a></li>
+<li><a href="#exiting-the-application-code-exit-code">3.14. Exiting the application: <code>exit</code></a></li>
+<li><a href="#importing-exporting-question-banks-code-coming-in-v2-0-code">3.15. Importing / Exporting question banks <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#quiz-mode">4. Quiz Mode</a>
@@ -37,6 +37,8 @@
 <li><a href="#custom-mode">4.3. Custom Mode</a></li>
 <li><a href="#answering-questions">4.4. Answering Questions</a></li>
 <li><a href="#exiting-the-quiz">4.5. Exiting the quiz</a></li>
+<li><a href="#hints-code-coming-in-v2-0-code">4.6. Hints <code>[coming in v2.0]</code></a></li>
+<li><a href="#pictures-diagrams-code-coming-in-v2-0-code">4.7. Pictures/Diagrams <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -283,9 +285,9 @@ select the option.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-question-code-add-code"><a class="link" href="#adding-a-question-code-add-code">3.5. Adding a question: <code>add</code></a></h3>
+<h3 id="adding-mcq-truefalse-question-code-add-code"><a class="link" href="#adding-mcq-truefalse-question-code-add-code">3.5. Adding MCQ/TrueFalse question: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a question to the question bank</p>
+<p>Adds a MCQ or TrueFalse question to the question bank</p>
 </div>
 <div class="paragraph">
 <p>Format: `add type/TYPE q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER x/WRONG_ANSWER&#8230;&#8203; `</p>
@@ -295,8 +297,7 @@ select the option.</p>
 <div class="paragraph">
 <p>The following are the valid answer formats for each question type:<br>
 <strong>MCQ</strong>: 1 Correct answer and 3 Wrong answers.<br>
-<strong>True &amp; False</strong>: 1 Correct answer (i.e. True / False) wrong answers omitted.<br>
-<strong>SAQ</strong>: Multiple correct answers, no wrong answers.</p>
+<strong>True &amp; False</strong>: 1 Correct answer (i.e. True / False) wrong answers omitted.</p>
 </div>
 </div>
 </div>
@@ -312,14 +313,48 @@ x/Greenfield x/Brownfield y/None of the others x/Padifield</code></p>
 <li>
 <p><code>add type/tf q/OODMs are Class Diagrams cat/uml diff/2 y/true</code></p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-saq-code-add-code"><a class="link" href="#adding-saq-code-add-code">3.6. Adding SAQ: <code>add</code></a></h3>
+<div class="paragraph">
+<p>Adds a SAQ to the question bank</p>
+</div>
+<div class="paragraph">
+<p>Format: `add type/saq q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER &#8230;&#8203; `</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>The following are the valid answer formats for SAQ:<br>
+<strong>SAQ</strong>: Multiple correct answers, no wrong answers.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p><code>add type/saq q/What does UML stands for? cat/cs2103 diff/1 y/unified modeling language</code></p>
 </li>
 </ul>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>NOTE</strong>:<br>
+Answer to the SAQ cannot be "exit".<br>
+Answer cannot appear in the question<br>
+(eg. q/What is UML diagram? y/UML Diagram).</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></h3>
+<h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.7. Editing a question : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing question in the question bank.</p>
 </div>
@@ -361,7 +396,7 @@ Edits the the first question to "According the the textbook, is greenfield or br
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-question-code-delete-code"><a class="link" href="#deleting-a-question-code-delete-code">3.7. Deleting a question : <code>delete</code></a></h3>
+<h3 id="deleting-a-question-code-delete-code"><a class="link" href="#deleting-a-question-code-delete-code">3.8. Deleting a question : <code>delete</code></a></h3>
 <div class="paragraph">
 <p>Deletes the specified questions from the question bank.<br>
 Format: <code>delete INDEX [MORE_INDICES]</code></p>
@@ -402,7 +437,7 @@ Deletes the 1st, 3rd and 5th question in the question bank list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-questions-code-list-code"><a class="link" href="#listing-all-questions-code-list-code">3.8. Listing all questions : <code>list</code></a></h3>
+<h3 id="listing-all-questions-code-list-code"><a class="link" href="#listing-all-questions-code-list-code">3.9. Listing all questions : <code>list</code></a></h3>
 <div class="paragraph">
 <p>Shows a list of all questions in the test back. If appended with a category and/or difficulty, <code><strong>Insert name</strong></code> will show all questions
 of the chosen category and/or difficulty</p>
@@ -437,7 +472,7 @@ If no category or difficulty is stated (i.e. <code>list</code>), program will li
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-questions-code-find-code"><a class="link" href="#locating-questions-code-find-code">3.9. Locating questions: <code>find</code></a></h3>
+<h3 id="locating-questions-code-find-code"><a class="link" href="#locating-questions-code-find-code">3.10. Locating questions: <code>find</code></a></h3>
 <div class="paragraph">
 <p>Finds questions whose descriptions contain any of the given keywords.<br>
 Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
@@ -482,14 +517,14 @@ Returns any question containing descriptions <code>User</code>, <code>Brownfield
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all questions from the question bank.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="restoring-all-entries-code-restore-code"><a class="link" href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></h3>
+<h3 id="restoring-all-entries-code-restore-code"><a class="link" href="#restoring-all-entries-code-restore-code">3.12. Restoring all entries : <code>restore</code></a></h3>
 <div class="paragraph">
 <p>Clears all current questions from the question bank and restores the default questions that were in the original app.<br>
 Users will be prompted if they really want to restore their current question bank as the command is non-reversible.
@@ -497,31 +532,23 @@ Format: <code>restore</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.12. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.13. Saving the data</a></h3>
 <div class="paragraph">
 <p>question bank data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-application-code-exit-code"><a class="link" href="#exiting-the-application-code-exit-code">3.13. Exiting the application: <code>exit</code></a></h3>
+<h3 id="exiting-the-application-code-exit-code"><a class="link" href="#exiting-the-application-code-exit-code">3.14. Exiting the application: <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the application.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-exporting-question-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-question-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting question banks <code>[coming in v2.0]</code></a></h3>
+<h3 id="importing-exporting-question-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-question-banks-code-coming-in-v2-0-code">3.15. Importing / Exporting question banks <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p>User can export can import json files containing the question bank into the application.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="hints-code-coming-in-v2-0-code"><a class="link" href="#hints-code-coming-in-v2-0-code">3.15. Hints <code>[coming in v2.0]</code></a></h3>
-<div class="paragraph">
-<p>User will be able to get hints for MCQs and SAQs. Typing '/hint' for MCQs will eliminate two wrong answers from the
-options, leaving user with two options, one of which is correct. Typing '/hint' for SAQs will show the user random
-keywords from the correct answer list.</p>
 </div>
 </div>
 </div>
@@ -591,6 +618,20 @@ difficulty.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>exit</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hints-code-coming-in-v2-0-code"><a class="link" href="#hints-code-coming-in-v2-0-code">4.6. Hints <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>User will be able to get hints for MCQs and SAQs. Typing '/hint' for MCQs will eliminate two wrong answers from the
+options, leaving user with two options, one of which is correct. Typing '/hint' for SAQs will show the user random
+keywords from the correct answer list.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pictures-diagrams-code-coming-in-v2-0-code"><a class="link" href="#pictures-diagrams-code-coming-in-v2-0-code">4.7. Pictures/Diagrams <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>User will be able to upload pictures and diagrams as part of the questions when adding questions to the test bank.</p>
 </div>
 </div>
 </div>
@@ -680,4 +721,4 @@ arrow keys and hit <kbd>Enter</kbd> to complete the command.
 </table>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:14:35 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:01:41 UTC</div></div></div></body></html>

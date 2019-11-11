@@ -24,10 +24,11 @@
 <ul class="sectlevel2">
 <li><a href="#add-questions-feature">3.1. Add questions feature</a></li>
 <li><a href="#Implementation-ConfigQuiz">3.2. Configuration and Quiz Mode</a></li>
-<li><a href="#restore-feature">3.3. Restore feature</a></li>
-<li><a href="#autocomplete-feature">3.4. AutoComplete feature</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
+<li><a href="#saq-feature">3.3. Saq feature</a></li>
+<li><a href="#restore-feature">3.4. Restore feature</a></li>
+<li><a href="#autocomplete-feature">3.5. AutoComplete feature</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -753,9 +754,69 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 <div class="sect2">
-<h3 id="restore-feature"><a class="link" href="#restore-feature">3.3. Restore feature</a></h3>
+<h3 id="saq-feature"><a class="link" href="#saq-feature">3.3. Saq feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-3"><a class="link" href="#implementation-3">3.3.1. Implementation</a></h4>
+<h4 id="how-saq-works"><a class="link" href="#how-saq-works">3.3.1. How Saq works</a></h4>
+<div class="paragraph">
+<p>The Saq input mechanism is facilitated by <code>SaqInputCommand</code>. It extends <code>Command</code> and execute the <code>CommandResult</code>. The input
+will be  parse into <code>SaqInputCommandParser</code> to check for input validity. If the input String is not valid (i.e the String
+does not start with a letter of number), an invalid command parse exception will be thrown, indicating to user that the
+input String requires a letter or a number at the start of the String.</p>
+</div>
+<div class="paragraph">
+<p>If the input is valid, <code>SaqInputCommand</code> object of type <code>Command</code> will be created. The execute command of the
+<code>SaqInputCommand</code> object will be executed. The execute command will call the <code>isCorrect</code> method of Saq to check if the
+user input is correct or not.</p>
+</div>
+<div class="paragraph">
+<p>The activity diagram below shows the steps the user takes to answer an SAQ.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SaqAnswerCheckerActivityDiagram.png" alt="SaqAnswerCheckerActivityDiagram" width="700">
+</div>
+<div class="title">Figure 13. Activity Diagram of checking answer for SAQ</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nlp-libraries"><a class="link" href="#nlp-libraries">3.3.2. NLP Libraries</a></h4>
+<div class="paragraph">
+<p>External libraries were used to determine if the user input is correct or not. <code>StanfordCoreNLP</code> library was used to
+check for sentimental value of user input and the list of correct answers. This helps to check for negative sentence
+against a neutral or positive sentence (eg. "not a uml diagram" and "it&#8217;s a uml diagram"). The <code>FuzzyWuzzy</code> library was
+also used to determine the similarity percentage of the user input to the correct answer using fuzzy string matching
+technique.</p>
+</div>
+<div class="paragraph">
+<p>The class diagram below shows the relationship between the classes that are used to validate the correctness of the
+user input.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SaqAnswerCheckerClassDiagram.png" alt="SaqAnswerCheckerClassDiagram" width="790">
+</div>
+<div class="title">Figure 14. Class Diagram of SAQ Answer Checker</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="validating-the-answer"><a class="link" href="#validating-the-answer">3.3.3. Validating the answer</a></h4>
+<div class="paragraph">
+<p>The <code>execute</code> method will return the <code>CommandResult</code>, correct or wrong. The currentAnswerable of type <code>Saq</code> will call its
+<code>isCorrect</code> method and return a boolean value, true for correct answer and false for wrong answer. The sequence diagram
+below shows the steps taken by the <code>isCorrect</code> method to determine if the user input is correct or wrong.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SaqIsCorrectSequenceDiagram.png" alt="SaqIsCorrectSequenceDiagram" width="790">
+</div>
+<div class="title">Figure 15. Sequence Diagram of SAQ isCorrect Method</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="restore-feature"><a class="link" href="#restore-feature">3.4. Restore feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">3.4.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The restore mechanism is facilitated by <code>RestoreCommand</code>.
 It extends <code>Command</code> that will read a user command and execute the command result.
@@ -776,7 +837,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -812,9 +873,9 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.4. AutoComplete feature</a></h3>
+<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.5. AutoComplete feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-4"><a class="link" href="#implementation-4">3.4.1. Implementation</a></h4>
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -833,7 +894,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -888,14 +949,14 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -926,7 +987,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1699,4 +1760,4 @@ Expected: Start quiz window will pop up similar to previous test case. The diffe
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:14:35 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:01:41 UTC</div></div></div></body></html>
