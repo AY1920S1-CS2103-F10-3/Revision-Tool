@@ -35,10 +35,7 @@
 <li><a href="#contributions-to-the-developer-guide">6. Contributions to the Developer Guide</a>
 <ul class="sectlevel3">
 <li><a href="#managing-parsing-in-configuration-and-quiz-mode">6.1. Managing parsing in Configuration and Quiz Mode</a></li>
-<li><a href="#parsing-in-configuration-mode">6.2. Parsing in Configuration Mode</a></li>
-<li><a href="#parsing-in-quiz-mode">6.3. Parsing in Quiz Mode</a></li>
-<li><a href="#the-code-answerable-code-class">6.4. The <code>Answerable</code> Class</a></li>
-<li><a href="#quiz-mode-2">6.5. Quiz Mode</a></li>
+<li><a href="#Implementation-ConfigQuiz">6.2. Configuration and Quiz Mode</a></li>
 </ul>
 </li>
 </ul>
@@ -114,10 +111,10 @@ of many of the other features.</p>
 <p>Created the Normal and Arcade mode for the quiz. In Arcade Mode, each level has increasing difficulty and a shorter time limit, whenever a user gets a question wrong, the quiz ends and the user has to restart.</p>
 </li>
 <li>
-<p>Created the abstract <code>Answerable</code> Class for subclasses such as <code>MCQ</code>, <code>TrueFalse</code> and <code>SAQ</code> classes to be built upon.</p>
+<p>Created the abstract <code>Answerable</code> Class for subclasses such as <code>MCQ</code>, <code>TrueFalse</code> and <code>SAQ</code> classes to be built upon using the factory design pattern.</p>
 </li>
 <li>
-<p>Added a progress bar for each level in the quiz.</p>
+<p>Added an interactive progress bar for each level in the quiz.</p>
 </li>
 <li>
 <p>Implemented the adaptable UI for each type of question’s answers (i.e. allowing the GUI to change from displaying 4 panels for MCQs to 2 panels for True &amp; False questions).</p>
@@ -126,7 +123,7 @@ of many of the other features.</p>
 </div>
 </li>
 <li>
-<p><strong>Code contributed</strong>: You can view the code I contributed to this project <a href="{contributedCodeUtl}/">here, window=blank</a></p>
+<p><strong>Code contributed</strong>: You can view the code I contributed to this project <a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#=undefined&amp;search=wilfredbtan">here</a></p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -328,6 +325,11 @@ Edits the the first question to "According the the textbook, is greenfield or br
 <p>Levels are separated by difficulty. At the end of each level, user has the choice to move on to the next level or exit the quiz.
 The user is given 30 seconds to answer each question.</p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/normal-mode.png" alt="normal mode">
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="arcade-mode"><a class="link" href="#arcade-mode">4.2. Arcade Mode</a></h3>
@@ -335,6 +337,11 @@ The user is given 30 seconds to answer each question.</p>
 <p>Levels are separated by difficulty. If the user enters a wrong answer before finishing the quiz. The quiz will end and display the results.
 The user is given 30 seconds to answer each question in level 1. Subsequent level timers are 5 seconds faster than the previous level with
 level 3 giving the user 20 seconds to answer each question.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/arcade-mode.png" alt="arcade mode">
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -355,7 +362,7 @@ difficulty.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MCQ</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TFQ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TrueFalse</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SAQ</p></td>
 </tr>
 <tr>
@@ -433,7 +440,7 @@ e.g. <code>find user story</code></p>
 <div class="sect3">
 <h4 id="managing-parsing-in-configuration-and-quiz-mode"><a class="link" href="#managing-parsing-in-configuration-and-quiz-mode">6.1. Managing parsing in Configuration and Quiz Mode</a></h4>
 <div class="paragraph">
-<p>During a quiz session a <code>QuizParser</code> instead of <code>Parser</code> is used.</p>
+<p>The Revision Tool uses two Parser interfaces (<code>Parser</code> and <code>QuizParser</code>) to parse different sets of commands (i.e. in Configuration Mode and in Quiz Mode).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -442,13 +449,23 @@ e.g. <code>find user story</code></p>
 <div class="title">Figure 1. Class Diagram of ParserManager to display how parsers are created in both modes.</div>
 </div>
 <div class="paragraph">
-<p>As different commands are accepted in Configuration and Quiz Mode, the <code>ParserManager</code> class uses overloaded methods to
-decide the valid commands in each mode. The following are the parsers used in each mode:</p>
+<p>As shown in the figure above, the <code>ParserManager</code> class is responsible for creating the respective parsers for Configuration and Quiz Mode.
+This was designed while taking into consideration that the Quiz Mode Parsers (i.e. XYZParsers) will require
+an extra <code>Answerable</code> argument on top of the user input String in order to carry out commands such as determining whether the user&#8217;s input is the correct answer.
+(E.g. to call methods such as Answerable#isCorrect(Answer))</p>
+</div>
+<div class="paragraph">
+<p>As different commands are accepted in Configuration and Quiz Mode, the <code>ParserManager</code> class uses overloaded methods
+(<code>parseCommand(String)</code> and <code>parseCommand(String, Answerable)</code> to determine the valid commands in each mode. If a Configuration Mode
+command such as <code>add</code> were to be used in Quiz Mode, the ParserManager would deem the the command as invalid.<br></p>
+</div>
+<div class="paragraph">
+<p>With reference to Figure 6, The following are the parsers used in each mode:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>ABCParser:</p>
+<p>ABCParser (Configuration Mode):</p>
 <div class="ulist">
 <ul>
 <li>
@@ -473,7 +490,7 @@ decide the valid commands in each mode. The following are the parsers used in ea
 </div>
 </li>
 <li>
-<p>XYZParser:</p>
+<p>XYZParser (Quiz Mode):</p>
 <div class="ulist">
 <ul>
 <li>
@@ -490,12 +507,68 @@ decide the valid commands in each mode. The following are the parsers used in ea
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>A more detailed description of the implementation of parsing in Configuration and Quiz Mode and its design considerations
+can be found in <a href="#Implementation-ConfigQuiz">Section 6.2, &#8220;Configuration and Quiz Mode&#8221;</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Implementation-ConfigQuiz"><a class="link" href="#Implementation-ConfigQuiz">6.2. Configuration and Quiz Mode</a></h3>
+<div class="paragraph">
+<p>As different commands are available for Configuration and Quiz Mode, we have to determine which commands are valid based on
+the state of the application. To do so, we had two main design considerations: The structure of the parser component and how to
+determine which parser to use. We will discuss these considerations in the following segment.</p>
 </div>
 <div class="sect3">
-<h4 id="parsing-in-configuration-mode"><a class="link" href="#parsing-in-configuration-mode">6.2. Parsing in Configuration Mode</a></h4>
+<h4 id="design-considerations"><a class="link" href="#design-considerations">6.2.1. Design Considerations</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aspect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conclusion and Explanation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Structure of the Parser Component</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Command parsers for both modes implement the same interface (i.e. implement both parse(String) and parse(String, Answerable) methods)
+but for the method which is not used, throw an error if a client calls it.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Command parsers belonging to each mode implement different interfaces (i.e. a <code>Parser</code> or <code>QuizParser</code> interface)
+which dictates the parameters of their parse() methods. (i.e. parse(String) for Configuration Mode vs parse(String, Answerable) for Quiz Mode)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 2 was implemented. The main reason for this choice was to adhere to the interface-segregation principle.
+If alternative 1 were to be implemented, a Configuration Mode command may have to implement a parse(String, Answerable)
+dummy method which it will not use. This is bad design as a client might be able to call the dummy method and receive
+unexpected results. Thus, by separating the interfaces, clients will only need to know about the methods that they need.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determining which parser to use</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create two parser manager classes (i.e. <code>QuizParserManager</code> and <code>ParserManager</code>)
+with accompanying <code>QuizLogicManager</code> and <code>LogicManager</code> classes whose methods will be called in <code>MainWindow</code> for Configuration Mode and
+<code>StartQuizWindow</code> for Quiz Mode respectively.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use a single <code>ParserManager</code> class which has overloaded methods of parse(String) and parse(String, Answerable). A
+single <code>LogicManager</code> will also implement <code>execute(String)</code> and <code>execute(String, Answerable)</code>. In Configuration Mode, the
+<code>LogicManager</code> will call <code>execute(String)</code> as there is no need to take in an Answerable and in Quiz Mode, the <code>LogicManager</code>
+will call `execute(String, Answerable) to initiate quiz-related commands.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 2 was implemented. By doing so, we were able to adopt a facade design pattern. The main benefit would be that
+the client doesn&#8217;t need to know the logic involved in selecting which type of parser and logic to use. This hides the internal
+complexity of the <code>ParserManager</code> class which will be responsible for determining which type of parser to use.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="commands-in-configuration-mode"><a class="link" href="#commands-in-configuration-mode">6.2.2. Commands in Configuration Mode</a></h4>
 <div class="paragraph">
-<p>In Configuration Mode, a single string is passed as an argument to the execute method.
-Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+<p>In Configuration Mode, a single string is passed as an argument to the Logic#execute method (i.e. execute(String)).</p>
+</div>
+<div class="paragraph">
+<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -517,9 +590,9 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 </div>
 </div>
 <div class="sect3">
-<h4 id="parsing-in-quiz-mode"><a class="link" href="#parsing-in-quiz-mode">6.3. Parsing in Quiz Mode</a></h4>
+<h4 id="commands-in-quiz-mode"><a class="link" href="#commands-in-quiz-mode">6.2.3. Commands in Quiz Mode</a></h4>
 <div class="paragraph">
-<p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the execute method.
+<p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the Logic#execute method. (i.e. execute(String, Answerable))
 Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("c", answerable)</code> API call.</p>
 </div>
 <div class="imageblock">
@@ -528,99 +601,87 @@ Given below is the Sequence Diagram for interactions within the <code>Logic</cod
 </div>
 <div class="title">Figure 3. Interactions Inside the Logic Component for the <code>c</code> input command.</div>
 </div>
-<div class="paragraph">
-<p>Key differences between parsing in Configuration Mode and Quiz Mode:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>In Quiz Mode, <code>Answerable#isCorrect(answer)</code> is called from the <code>McqInputCommand</code> to check whether the user&#8217;s answer is correct.</p>
-</li>
-<li>
-<p>After which, the result is used to construct a <code>CommandResult</code> will be passed back to the <code>LogicManager</code></p>
-</li>
-<li>
-<p>Lastly, the <code>Model</code> is accessed to update the user&#8217;s score history.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>CommandResult</code> is built using a builder design to allow flexibility of values returned to the <code>LogicManager</code>.
-To guard against null values, default values are provided to every field in the <code>CommandResult</code> class upon construction.
-Objects that call <code>CommandResult</code> can choose to customise <code>CommandResult</code> according to their needs.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect3">
-<h4 id="the-code-answerable-code-class"><a class="link" href="#the-code-answerable-code-class">6.4. The <code>Answerable</code> Class</a></h4>
+<h4 id="key-differences-between-configuration-mode-and-quiz-mode"><a class="link" href="#key-differences-between-configuration-mode-and-quiz-mode">6.2.4. Key differences between Configuration Mode and Quiz Mode:</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration Mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quiz Mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logic#execute takes in a single string.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logic#execute takes in a String and an Answerable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No methods of answerables are called.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Answerable#isCorrect(Answer)) is called from the AnswerableInputCommands such as <code>McqInputCommand</code> to check whether the user&#8217;s answer is correct.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CommandResult is used to display feedback to the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CommandResult is used to display feedback to the user and inform <code>LogicManager</code> whether the selected answer is correct.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model is used to save actions such as the addition/deletion of answerables.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model is used to update the score history statistics.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="implementation-of-commandresult-builder-design-pattern"><a class="link" href="#implementation-of-commandresult-builder-design-pattern">6.2.5. Implementation of CommandResult (Builder Design Pattern)</a></h4>
+<div class="paragraph">
+<p>The <code>CommandResult</code> class is designed using a builder pattern to allow flexibility of values returned to the <code>LogicManager</code>.
+To guard against null values, default values are provided to every field in the <code>CommandResult</code> class upon construction.
+Objects that call <code>CommandResult</code> can choose to customise <code>CommandResult</code> according to their needs.</p>
+</div>
+<div class="paragraph">
+<p>Below is a code snippet of the <code>CommandResultBuilder</code> and <code>CommandResult</code> class:</p>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/AnswerableClassDiagram.png" alt="AnswerableClassDiagram">
+<img src="../images/wilfred-commandwithfeedback.png" alt="wilfred commandwithfeedback" width="790">
 </div>
-<div class="title">Figure 4. Class Diagram of the Answerable Class</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/wilfred-commandbuild.png" alt="wilfred commandbuild" width="790">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/wilfred-commandresult.png" alt="wilfred commandresult" width="790">
+</div>
 </div>
 <div class="paragraph">
-<p>The main class that the Revision Tool operates on is the <code>Answerable</code> class.</p>
+<p>Examples of how to build a CommandResult:</p>
 </div>
-<div class="paragraph">
-<p>Each <code>Answerable</code> class must have 1 <code>Question</code>, 1 <code>Difficulty</code> and can have any amount of categories associated with it.
-The amount of answers that an <code>Answerable</code> can have depends on its type.</p>
-</div>
-<div class="paragraph">
-<p>There are 3 subclasses of the <code>Answerable</code> Class which are: <code>Mcq</code>, <code>TrueFalse</code> and <code>Saq</code>. Each class defines it&#8217;s
-own rules on the validity of <code>Answer</code> s provided to it.</p>
-</div>
-<div class="paragraph">
-<p>The following are the rules of validity for each subclass:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Mcq: 4 answers in total. 1 correct answer, 3 wrong answers.</p>
-</li>
-<li>
-<p>TrueFalse: Either 'true' or 'false' as its answer.</p>
-</li>
-<li>
-<p>Saq: Any amount of answers.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-For all subclasses, there cannot be any duplicates of answers. For example, if an Mcq class has "option1" as one of its
-wrong answers, it cannot have "option1" as its correct answer or another wrong answer.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ul>
+<div class="literalblock">
+<div class="content">
+<pre>CommandResult c = new CommandResultBuilder().withFeedback(message).withExit(true).build();
+CommandResult c = new CommandResultBuilder().isCorrect(true).build();</pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="quiz-mode-2"><a class="link" href="#quiz-mode-2">6.5. Quiz Mode</a></h3>
+</div>
 <div class="sect3">
-<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">6.5.1. How the quiz works</a></h4>
+<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">6.2.6. How the quiz works</a></h4>
 <div class="paragraph">
-<p>After the user has <code>start</code> ed the quiz, the application enters quiz mode. The following is the flow of events after a quiz
+<p>After the user has <code>start</code> ed the quiz, the application enters Quiz Mode. The following is the flow of events after a quiz
 session has started.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="../images/QuizSessionActivityDiagram.png" alt="QuizSessionActivityDiagram" width="790">
 </div>
-<div class="title">Figure 5. Activity Diagram of a Quiz Session in <code>NormalMode</code></div>
+<div class="title">Figure 4. Activity Diagram of a Quiz Session in <code>NormalMode</code></div>
+</div>
+<div class="paragraph">
+<p>Elaboration of Steps:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -661,4 +722,4 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 01:42:26 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:10:50 UTC</div></div></div></body></html>

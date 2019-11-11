@@ -254,7 +254,7 @@ arrow keys and hit <kbd>Enter</kbd> to complete the command.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>Logic</code> uses the <code>RevisionToolParser</code> class to parse the user command.</p>
+<p><code>Logic</code> uses the <code>ParserManager</code> class to parse the user command.</p>
 </li>
 <li>
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
@@ -267,6 +267,9 @@ arrow keys and hit <kbd>Enter</kbd> to complete the command.
 </li>
 <li>
 <p>In addition, the <code>CommandResult</code> object can also instruct the <code>Ui</code> to perform certain actions, such as displaying help to the user.</p>
+</li>
+<li>
+<p>In quiz mode, the <code>CommandResult</code> object is also used to determine whether the user&#8217;s answer is correct.</p>
 </li>
 </ol>
 </div>
@@ -391,4 +394,4 @@ If a command fails its execution, it will not save the question into the <code>r
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 01:42:26 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:10:50 UTC</div></div></div></body></html>
