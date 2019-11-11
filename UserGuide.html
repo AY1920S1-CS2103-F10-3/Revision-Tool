@@ -26,7 +26,7 @@
 <li><a href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></li>
 <li><a href="#saving-the-data">3.12. Saving the data</a></li>
 <li><a href="#exiting-the-application-code-exit-code">3.13. Exiting the application: <code>exit</code></a></li>
-<li><a href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting test banks <code>[coming in v2.0]</code></a></li>
+<li><a href="#importing-exporting-question-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting question banks <code>[coming in v2.0]</code></a></li>
 <li><a href="#hints-code-coming-in-v2-0-code">3.15. Hints <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
@@ -48,7 +48,7 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This CS2103/T Revision Tool (RT) is for those who <strong>prefer to use a desktop app for storing test banks</strong>.
+<p>This CS2103/T Revision Tool (RT) is for those who <strong>prefer to use a desktop app for storing question banks</strong>.
 More importantly, RT is <strong>optimized for those who prefer to work with a Command Line
 Interface</strong> (CLI) while still having the benefits of a Graphical User Interface (GUI).
 If you can type fast, RT can get your contact management tasks done faster than traditional
@@ -72,7 +72,7 @@ bugs related to displaying pop ups. more info about this bug can be found at thi
 <p>Download the latest RT <a href="https://github.com/AY1920S1-CS2103-F10-3/main/releases">here</a>.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for your <code><strong>test bank</strong></code>.</p>
+<p>Copy the file to the folder you want to use as the home folder for your <code><strong>question bank</strong></code>.</p>
 </li>
 <li>
 <p>Double-click the file to start the app. The GUI should appear in a few seconds. The image below shows the app in configuration mode.</p>
@@ -170,7 +170,7 @@ which can be used as <code>add type/mcq q/What the recommended user story format
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-To start all questions in the test bank, use command<br>
+To start all questions in the question bank, use command<br>
 start mode/normal
 </td>
 </tr>
@@ -253,8 +253,9 @@ start mode/normal
 <p>Helps you complete your command when you type.</p>
 </div>
 <div class="paragraph">
-<p>Upon pressing the "TAB" key on your keyboard, the app will be able to
-give you a list of dropdown options that will aid you in your command typing.</p>
+<p>Users will be able to see a list of auto complete options while they are typing. Once the auto complete context menu is
+shown, users can use the arrow keys to choose the options they want and upon pressing the "ENTER" button, they would be able to
+select the option.</p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -262,13 +263,19 @@ give you a list of dropdown options that will aid you in your command typing.</p
 <div class="ulist">
 <ul>
 <li>
-<p><code>User types "add" in the command box and presses the "TAB" key</code></p>
+<p><code>User wants to type the "start" command in the command box</code></p>
 </li>
 <li>
 <p><code>He will be able to see a list of dropdown options as shown:</code></p>
+</li>
+<li>
+<p><code>First "ENTER" button will select the option</code></p>
+</li>
+<li>
+<p><code>Second "ENTER" button will execute the option</code></p>
 <div class="imageblock">
 <div class="content">
-<img src="images/autocomplete.png" alt="autocomplete" width="790">
+<img src="images/Autocomplete2.png" alt="Autocomplete2" width="790">
 </div>
 </div>
 </li>
@@ -278,7 +285,7 @@ give you a list of dropdown options that will aid you in your command typing.</p
 <div class="sect2">
 <h3 id="adding-a-question-code-add-code"><a class="link" href="#adding-a-question-code-add-code">3.5. Adding a question: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a question to the test bank</p>
+<p>Adds a question to the question bank</p>
 </div>
 <div class="paragraph">
 <p>Format: `add type/TYPE q/QUESTION cat/CATEGORY diff/DIFFICULTY y/CORRECT_ANSWER x/WRONG_ANSWER&#8230;&#8203; `</p>
@@ -314,7 +321,7 @@ x/Greenfield x/Brownfield y/None of the others x/Padifield</code></p>
 <div class="sect2">
 <h3 id="editing-a-question-code-edit-code"><a class="link" href="#editing-a-question-code-edit-code">3.6. Editing a question : <code>edit</code></a></h3>
 <div class="paragraph">
-<p>Edits an existing question in the test bank.</p>
+<p>Edits an existing question in the question bank.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>edit INDEX [q/QUESTION] [cat/CATEGORY] [diff/DIFFICULTY] [x/WRONG_ANSWER]&#8230;&#8203; [y/CORRECT_ANSWER]&#8230;&#8203;</code></p>
@@ -356,7 +363,7 @@ Edits the the first question to "According the the textbook, is greenfield or br
 <div class="sect2">
 <h3 id="deleting-a-question-code-delete-code"><a class="link" href="#deleting-a-question-code-delete-code">3.7. Deleting a question : <code>delete</code></a></h3>
 <div class="paragraph">
-<p>Deletes the specified questions from the test bank.<br>
+<p>Deletes the specified questions from the question bank.<br>
 Format: <code>delete INDEX [MORE_INDICES]</code></p>
 </div>
 <div class="sidebarblock">
@@ -384,12 +391,12 @@ Format: <code>delete INDEX [MORE_INDICES]</code></p>
 <li>
 <p><code>list</code><br>
 <code>delete 2</code><br>
-Deletes the 2nd question in the test bank list.</p>
+Deletes the 2nd question in the question bank list.</p>
 </li>
 <li>
 <p><code>find Greenfield</code><br>
 <code>delete 1 3 5</code><br>
-Deletes the 1st, 3rd and 5th question in the test bank list.</p>
+Deletes the 1st, 3rd and 5th question in the question bank list.</p>
 </li>
 </ul>
 </div>
@@ -477,21 +484,22 @@ Returns any question containing descriptions <code>User</code>, <code>Brownfield
 <div class="sect2">
 <h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>Clears all questions from the test bank.<br>
+<p>Clears all questions from the question bank.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="restoring-all-entries-code-restore-code"><a class="link" href="#restoring-all-entries-code-restore-code">3.11. Restoring all entries : <code>restore</code></a></h3>
 <div class="paragraph">
-<p>Clears all current questions from the test bank and restores the default questions that were in the original app.<br>
+<p>Clears all current questions from the question bank and restores the default questions that were in the original app.<br>
+Users will be prompted if they really want to restore their current question bank as the command is non-reversible.
 Format: <code>restore</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.12. Saving the data</a></h3>
 <div class="paragraph">
-<p>Test bank data are saved in the hard disk automatically after any command that changes the data.
+<p>question bank data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.</p>
 </div>
 </div>
@@ -503,9 +511,9 @@ Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-exporting-test-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-test-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting test banks <code>[coming in v2.0]</code></a></h3>
+<h3 id="importing-exporting-question-banks-code-coming-in-v2-0-code"><a class="link" href="#importing-exporting-question-banks-code-coming-in-v2-0-code">3.14. Importing / Exporting question banks <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
-<p>User can export can import json files containing the test bank into the application.</p>
+<p>User can export can import json files containing the question bank into the application.</p>
 </div>
 </div>
 <div class="sect2">
@@ -583,7 +591,7 @@ difficulty.</p>
 <div class="paragraph">
 <p><strong>Q</strong>: How do I transfer my data to another Computer?<br>
 <strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
-data of your previous Test Bank folder.</p>
+data of your previous question bank folder.</p>
 </div>
 <div class="paragraph">
 <p><strong>Q</strong>: Why am I not able to click on the options to select the answers for MCQs and T/F questions?<br>
@@ -662,4 +670,4 @@ arrow keys and hit <kbd>Enter</kbd> to complete the command.
 </table>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 15:36:00 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 01:42:26 UTC</div></div></div></body></html>

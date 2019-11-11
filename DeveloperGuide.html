@@ -22,7 +22,7 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#proposed-add-questions-feature">3.1. [Proposed] Add questions feature</a></li>
+<li><a href="#add-questions-feature">3.1. Add questions feature</a></li>
 <li><a href="#quiz-mode">3.2. Quiz Mode</a></li>
 <li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
 <li><a href="#logging">3.4. Logging</a></li>
@@ -154,7 +154,7 @@ The following class plays an important role at the architecture level:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ArchitectureSequenceDiagram.png" alt="ArchitectureSequenceDiagram">
+<img src="images/ArchitectureSequenceDiagram2.png" alt="ArchitectureSequenceDiagram2">
 </div>
 <div class="title">Figure 3. Component interactions for <code>delete 1</code> command</div>
 </div>
@@ -361,7 +361,7 @@ Objects that call <code>CommandResult</code> can choose to customise <code>Comma
 <h3 id="Design-Model"><a class="link" href="#Design-Model">2.4. Model component</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/ModelClassDiagram.png" alt="ModelClassDiagram">
+<img src="images/ModelClassDiagram2.png" alt="ModelClassDiagram2">
 </div>
 <div class="title">Figure 9. Structure of the Model Component</div>
 </div>
@@ -441,7 +441,7 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 <h3 id="Design-Storage"><a class="link" href="#Design-Storage">2.5. Storage component</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/StorageClassDiagram.png" alt="StorageClassDiagram">
+<img src="images/StorageClassDiagram2.png" alt="StorageClassDiagram2">
 </div>
 <div class="title">Figure 11. Structure of the Storage Component</div>
 </div>
@@ -477,9 +477,9 @@ wrong answers, it cannot have "option1" as its correct answer or another wrong a
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="proposed-add-questions-feature"><a class="link" href="#proposed-add-questions-feature">3.1. [Proposed] Add questions feature</a></h3>
+<h3 id="add-questions-feature"><a class="link" href="#add-questions-feature">3.1. Add questions feature</a></h3>
 <div class="sect3">
-<h4 id="proposed-implementation"><a class="link" href="#proposed-implementation">3.1.1. Proposed Implementation</a></h4>
+<h4 id="implementation-2"><a class="link" href="#implementation-2">3.1.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The add questions mechanism is facilitated by <code>AddCommand</code>.
 It extends <code>Command</code> that will read a user command and execute the command result.
@@ -502,11 +502,11 @@ Additionally, it implements the following operations:</p>
 <p>Given below is an example usage scenario and how the add questions mechanism behaves at each step.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user types <code>add mcq q/"string of question" x/option1 x/option2 y/option3 x/option4 cat/[UML] diff/[easy]</code>, this command adds a easy difficulty mcq question about UML with 4 options and option3 being the correct answer.</p>
+<p>Step 1. The user types <code>add type/mcq q/"string of question" x/option1 x/option2 y/option3 x/option4 cat/[UML] diff/[easy]</code>, this command adds a easy difficulty mcq question about UML with 4 options and option3 being the correct answer.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/UndoRedoState0.png" alt="UndoRedoState0">
+<img src="images/InitialState.png" alt="InitialState">
 </div>
 </div>
 <div class="paragraph">
@@ -514,7 +514,7 @@ Additionally, it implements the following operations:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/UndoRedoState1.png" alt="UndoRedoState1">
+<img src="images/FirstState.png" alt="FirstState">
 </div>
 </div>
 <div class="paragraph">
@@ -522,7 +522,7 @@ Additionally, it implements the following operations:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/UndoRedoState2.png" alt="UndoRedoState2">
+<img src="images/SecondState.png" alt="SecondState">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -532,27 +532,7 @@ Additionally, it implements the following operations:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not save the question into the <code>test bank</code>. It will however throw an invalid command exception.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following sequence diagram shows how the add question operation works:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+If a command fails its execution, it will not save the question into the <code>revision tool</code>. It will however throw an invalid command exception.
 </td>
 </tr>
 </table>
@@ -1217,4 +1197,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-10 15:36:00 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 01:42:26 UTC</div></div></div></body></html>
