@@ -24,11 +24,10 @@
 <ul class="sectlevel2">
 <li><a href="#add-questions-feature">3.1. Add questions feature</a></li>
 <li><a href="#Implementation-ConfigQuiz">3.2. Configuration and Quiz Mode</a></li>
-<li><a href="#quiz-mode">3.3. Quiz Mode</a></li>
-<li><a href="#restore-feature">3.4. Restore feature</a></li>
-<li><a href="#autocomplete-feature">3.5. AutoComplete feature</a></li>
-<li><a href="#logging">3.6. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
+<li><a href="#restore-feature">3.3. Restore feature</a></li>
+<li><a href="#autocomplete-feature">3.4. AutoComplete feature</a></li>
+<li><a href="#logging">3.5. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -234,7 +233,7 @@ The following class plays an important role at the architecture level:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="managing-parsing-in-configuration-and-quiz-mode"><a class="link" href="#managing-parsing-in-configuration-and-quiz-mode">2.3.2. Managing parsing in Configuration and Quiz Mode</a></h4>
+<h4 id="managing-parsing-in-configuration-and-quiz-mode-overview"><a class="link" href="#managing-parsing-in-configuration-and-quiz-mode-overview">2.3.2. Managing parsing in Configuration and Quiz Mode (Overview)</a></h4>
 <div class="paragraph">
 <p>The Revision Tool uses two Parser interfaces (<code>Parser</code> and <code>QuizParser</code>) to parse different sets of commands (i.e. in Configuration Mode and in Quiz Mode).</p>
 </div>
@@ -549,8 +548,8 @@ If a command fails its execution, it will not save the question into the <code>r
 <h3 id="Implementation-ConfigQuiz"><a class="link" href="#Implementation-ConfigQuiz">3.2. Configuration and Quiz Mode</a></h3>
 <div class="paragraph">
 <p>As different commands are available for Configuration and Quiz Mode, we have to determine which commands are valid based on
-the state of the application. To do so, we had two main design considerations: The structure of the parser component and how to
-determine which parser to use. We will discuss these considerations in the following segment.</p>
+the state of the application. To implement this, we had to examine two main design considerations: The <strong>structure of the parser component</strong> and <strong>how to
+determine which parser to use</strong>. We will discuss these considerations in the following segment.</p>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.1. Design Considerations</a></h4>
@@ -563,18 +562,18 @@ determine which parser to use. We will discuss these considerations in the follo
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Aspect</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Conclusion and Explanation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Aspect</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alternative 1</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alternative 2</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Conclusion and Explanation</strong></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Structure of the Parser Component</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Command parsers for both modes implement the same interface (i.e. implement both parse(String) and parse(String, Answerable) methods)
+<td class="tableblock halign-left valign-top"><p class="tableblock">Command parsers for both modes implement the same interface (i.e. implement both <code>parse(String)</code> and <code>parse(String, Answerable)</code> methods)
 but for the method which is not used, throw an error if a client calls it.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Command parsers belonging to each mode implement different interfaces (i.e. a <code>Parser</code> or <code>QuizParser</code> interface)
-which dictates the parameters of their parse() methods. (i.e. parse(String) for Configuration Mode vs parse(String, Answerable) for Quiz Mode)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 2 was implemented. The main reason for this choice was to adhere to the interface-segregation principle.
+which dictates the parameters of their parse() methods. (i.e. <code>parse(String)</code> for Configuration Mode vs <code>parse(String, Answerable)</code> for Quiz Mode)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alternative 2 was implemented.</strong> The main reason for this choice was to adhere to the interface-segregation principle.
 If alternative 1 were to be implemented, a Configuration Mode command may have to implement a parse(String, Answerable)
 dummy method which it will not use. This is bad design as a client might be able to call the dummy method and receive
 unexpected results. Thus, by separating the interfaces, clients will only need to know about the methods that they need.</p></td>
@@ -587,8 +586,8 @@ with accompanying <code>QuizLogicManager</code> and <code>LogicManager</code> cl
 <td class="tableblock halign-left valign-top"><p class="tableblock">Use a single <code>ParserManager</code> class which has overloaded methods of parse(String) and parse(String, Answerable). A
 single <code>LogicManager</code> will also implement <code>execute(String)</code> and <code>execute(String, Answerable)</code>. In Configuration Mode, the
 <code>LogicManager</code> will call <code>execute(String)</code> as there is no need to take in an Answerable and in Quiz Mode, the <code>LogicManager</code>
-will call `execute(String, Answerable) to initiate quiz-related commands.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alternative 2 was implemented. By doing so, we were able to adopt a facade design pattern. The main benefit would be that
+will call <code>execute(String, Answerable)</code> to initiate quiz-related commands.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alternative 2 was implemented.</strong> By doing so, we were able to adopt a facade design pattern. The main benefit would be that
 the client doesn&#8217;t need to know the logic involved in selecting which type of parser and logic to use. This hides the internal
 complexity of the <code>ParserManager</code> class which will be responsible for determining which type of parser to use.</p></td>
 </tr>
@@ -598,10 +597,8 @@ complexity of the <code>ParserManager</code> class which will be responsible for
 <div class="sect3">
 <h4 id="commands-in-configuration-mode"><a class="link" href="#commands-in-configuration-mode">3.2.2. Commands in Configuration Mode</a></h4>
 <div class="paragraph">
-<p>In Configuration Mode, a single string is passed as an argument to the Logic#execute method (i.e. execute(String)).</p>
-</div>
-<div class="paragraph">
-<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+<p>In Configuration Mode, a single string is passed as an argument to the Logic#execute method (i.e. <code>execute(String)</code>).
+Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -625,7 +622,7 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 <div class="sect3">
 <h4 id="commands-in-quiz-mode"><a class="link" href="#commands-in-quiz-mode">3.2.3. Commands in Quiz Mode</a></h4>
 <div class="paragraph">
-<p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the Logic#execute method. (i.e. execute(String, Answerable))
+<p>In Quiz Mode, a string and the current <code>Answerable</code> object are passed as arguments to the Logic#execute method. (i.e. <code>execute(String, Answerable)</code>)
 Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("c", answerable)</code> API call.</p>
 </div>
 <div class="imageblock">
@@ -644,30 +641,30 @@ Given below is the Sequence Diagram for interactions within the <code>Logic</cod
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration Mode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Quiz Mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Configuration Mode</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quiz Mode</strong></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Logic#execute takes in a single string.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Logic#execute takes in a String and an Answerable.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No methods of answerables are called.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Answerable#isCorrect(Answer)) is called from the AnswerableInputCommands such as <code>McqInputCommand</code> to check whether the user&#8217;s answer is correct.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No methods of <code>Answerable</code> are called.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Answerable#isCorrect(Answer)</code> is called from <code>AnswerableInputCommand`s such as `McqInputCommand</code> to check whether the user&#8217;s answer is correct.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CommandResult is used to display feedback to the user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CommandResult is used to display feedback to the user and inform <code>LogicManager</code> whether the selected answer is correct.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CommandResult</code> is used to display feedback to the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CommandResult</code> is used to display feedback to the user and inform <code>LogicManager</code> whether the selected answer is correct.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Model is used to save actions such as the addition/deletion of answerables.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Model is used to update the score history statistics.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Model</code> is used to save actions such as the addition/deletion of answerables.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Model</code> is used to update the score history statistics.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="implementation-of-commandresult-builder-design-pattern"><a class="link" href="#implementation-of-commandresult-builder-design-pattern">3.2.5. Implementation of CommandResult (Builder Design Pattern)</a></h4>
+<h4 id="implementation-of-code-commandresult-code-builder-design-pattern"><a class="link" href="#implementation-of-code-commandresult-code-builder-design-pattern">3.2.5. Implementation of <code>CommandResult</code> (Builder Design Pattern)</a></h4>
 <div class="paragraph">
 <p>The <code>CommandResult</code> class is designed using a builder pattern to allow flexibility of values returned to the <code>LogicManager</code>.
 To guard against null values, default values are provided to every field in the <code>CommandResult</code> class upon construction.
@@ -701,11 +698,8 @@ CommandResult c = new CommandResultBuilder().isCorrect(true).build();</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="quiz-mode"><a class="link" href="#quiz-mode">3.3. Quiz Mode</a></h3>
 <div class="sect3">
-<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">3.3.1. How the quiz works</a></h4>
+<h4 id="how-the-quiz-works"><a class="link" href="#how-the-quiz-works">3.2.6. How the quiz works</a></h4>
 <div class="paragraph">
 <p>After the user has <code>start</code> ed the quiz, the application enters Quiz Mode. The following is the flow of events after a quiz
 session has started.</p>
@@ -717,12 +711,12 @@ session has started.</p>
 <div class="title">Figure 12. Activity Diagram of a Quiz Session in <code>NormalMode</code></div>
 </div>
 <div class="paragraph">
-<p>Elaboration of Steps:</p>
+<p><strong>Elaboration of Steps:</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>After the user has started either a normal / custom mode quiz. He/she will be prompted to key in their answer.</p>
+<p>After the user has started a normal mode quiz. He/she will be prompted to key in their answer.</p>
 </li>
 <li>
 <p>If the input is valid, the revision tool will display the subsequent question until the level / entire quiz has ended.</p>
@@ -750,6 +744,7 @@ move on to the next question.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
+For Custom Mode, the game play is the same except that user can choose the category and difficulty of questions.<br>
 For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </td>
 </tr>
@@ -758,9 +753,9 @@ For Arcade Mode, when a users enters a wrong answer, the quiz will end.
 </div>
 </div>
 <div class="sect2">
-<h3 id="restore-feature"><a class="link" href="#restore-feature">3.4. Restore feature</a></h3>
+<h3 id="restore-feature"><a class="link" href="#restore-feature">3.3. Restore feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-3"><a class="link" href="#implementation-3">3.4.1. Implementation</a></h4>
+<h4 id="implementation-3"><a class="link" href="#implementation-3">3.3.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The restore mechanism is facilitated by <code>RestoreCommand</code>.
 It extends <code>Command</code> that will read a user command and execute the command result.
@@ -781,7 +776,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -817,9 +812,9 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.5. AutoComplete feature</a></h3>
+<h3 id="autocomplete-feature"><a class="link" href="#autocomplete-feature">3.4. AutoComplete feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.4.1. Implementation</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -838,7 +833,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -893,14 +888,14 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -931,7 +926,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1198,7 +1193,57 @@ Additionally, it implements the following operations:</p>
 <div class="paragraph">
 <p>(For all use cases below, the <strong>System</strong> is the <code>RevisionTool</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
-<h3 id="use-case-delete-answerable" class="discrete">Use case: Delete answerable</h3>
+<h3 id="use-case-uc01-add-answerable" class="discrete">Use case (UC01): Add answerable</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add an answerable</p>
+</li>
+<li>
+<p>RevisionTool adds the answerable</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The answerable already exists in the list.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. RevisionTool shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>2a. Any of the parameters provided are invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. RevisionTool shows an error message.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-uc02-delete-answerable" class="discrete">Use case (UC02): Delete answerable</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -1247,8 +1292,154 @@ Additionally, it implements the following operations:</p>
 </li>
 </ul>
 </div>
+<h3 id="use-case-uc03-start-quiz-in-code-normal-mode-code" class="discrete">Use case (UC03): Start Quiz in <code>Normal Mode</code></h3>
 <div class="paragraph">
-<p><em>{More to be added}</em></p>
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to start quiz in Normal Mode</p>
+</li>
+<li>
+<p>RevisionTool shows the Quiz Mode window with the first question displayed.</p>
+</li>
+<li>
+<p>User enters his input into the command box.</p>
+</li>
+<li>
+<p>RevisionTool checks the input and records the result of the answer (i.e. whether correct or not).</p>
+</li>
+<li>
+<p>RevisionTool displays the next question. Use case resumes at step 3.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The list of questions for the quiz is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given input is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. RevisionTool shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3c. User inputs an exit command.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>5a. The current level of the quiz has ended.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>5a1. RevisionTool prompts the user to continue or end the quiz.</p>
+</li>
+<li>
+<p>5a2. User chooses to proceed to the next level.</p>
+<div class="paragraph">
+<p>Use case resumes at step 5.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5b. The current level of the quiz has ended.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>5b1. RevisionTool prompts the user to continue or end the quiz.</p>
+</li>
+<li>
+<p>5b2. User chooses to end the quiz.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5c. The entire quiz has ended.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>5c1. RevisionTool prompts the user to restart or end the quiz.</p>
+</li>
+<li>
+<p>5c2. User chooses to restart the quiz.</p>
+<div class="paragraph">
+<p>Use case ends resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>5d. The entire quiz has ended.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>5d1. RevisionTool prompts the user to restart or end the quiz.</p>
+</li>
+<li>
+<p>5d2. User chooses to end the quiz.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>*a. Time available to answer each question of the quiz runs out (30 seconds for Normal Mode).</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>*a1. RevisionTool marks the question as wrong.</p>
+<div class="paragraph">
+<p>Use case resumes at step 5.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Custom Mode, the use case is the same except timer can be customised.<br>
+For Arcade Mode, an extension 4a will be added. If the user gets the question wrong, the quiz will end and the User will
+be prompted to restart or end the quiz.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1508,4 +1699,4 @@ Expected: Start quiz window will pop up similar to previous test case. The diffe
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:02:56 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:14:35 UTC</div></div></div></body></html>
